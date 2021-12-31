@@ -2,6 +2,7 @@
 <html lang="it">
     <head>
         <title>Crown's Atelier</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel = 'icon' href="./resources/icon.ico"
         type = "image/x-icon"/>
         <link rel="stylesheet" href="style.css"/>
@@ -10,7 +11,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script type="text/javascript" src="./lang/it-ita.js"></script>
     </head>
-    <body>
+    <body class="d-flex flex-column min-vh-100">
         <nav class="navbar navbar-expand-lg navbar-light bg-light"> 
             <div class="container-fluid">
                 <a class="navbar-brand" href="#index.html">
@@ -72,8 +73,10 @@
                 </a>
             </div>
         </main>
-        <footer class="bg-light">
-            <h3>Crown's Atelier, 2022</h3>
+        <footer class="mt-auto text-center text-lg-start bg-light text-muted">
+            <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+                Crown's Atelier, 2022
+            </div>
         </footer>
     </body>
 </html>
