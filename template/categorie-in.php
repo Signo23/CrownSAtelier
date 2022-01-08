@@ -7,7 +7,7 @@
             <div class="card-body">
                 <h5 class="card-title"><?php echo $categoria['nomeCategoria']; ?></h5>
                 <p class="card-text"><?php echo $categoria['descrizione']; ?></p>
-                <a href="lista-prodotti-categoria.php" class="btn btn-success"></a>
+                <a href="lista-prodotti-categoria.php" class="btn btn-success stretched-link"></a>
             </div>
         </div>
     <?php endforeach;?>
