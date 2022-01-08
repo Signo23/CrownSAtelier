@@ -5,9 +5,9 @@
 <div class="album py-5">
     <div class="container">
 
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="row row-cols-1 row-cols-md-3 g-3">
         <?php foreach($templateParams["prodotti"] as $prodotto): ?>
-            <div class="card mb-3 d-md-none" style="max-width: 540px;">
+            <div class="card mb-3 d-md-none">
                 <div class="row g-0">
                     <div class="col-4">
                         <img src="./resources/img/products/<?php echo $prodotto['imgURL'];?>" class="img-fluid rounded-start" alt=""/>

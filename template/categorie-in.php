@@ -3,7 +3,7 @@
 <div class="row m-5 d-flex justify-content-center">
     <?php foreach($templateParams["categorie"] as $categoria): ?>
         <div class="card m-3" style="width: 18rem;">
-            <img src="./resources/img/<?php echo $categoria['img']?>" class="card-img-top" alt="<?php echo $categoria['nomeCategoria'] ?>" style="max-height: 500px;"/>
+            <img src="./resources/img/<?php echo $categoria['img']?>" class="card-img-top" alt="<?php echo $categoria['nomeCategoria'] ?>"/>
             <div class="card-body">
                 <h5 class="card-title"><?php echo $categoria['nomeCategoria']; ?></h5>
                 <p class="card-text"><?php echo $categoria['descrizione']; ?></p>
