@@ -21,10 +21,10 @@ class DatabaseHelper{
         $query = "SELECT * 
         FROM prodotti, prodotti_forniti 
         WHERE prodotti.idProdotto = prodotti_forniti.idProdotto 
-        AND prodotti.categoria = ? 
-        AND prodotti_forniti.idProdott IN ( SELECT p.idProdotto, min(p.prezzo) 
+        AND prodotti.categoria = ?
+        AND prodotti_forniti.prezzo IN ( SELECT min(p.prezzo) 
                                             FROM prodotti_forniti p 
-                                            GROUP BY p.idProdotto )"
+                                            GROUP BY p.idProdotto )";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i',$idcategory);
         $stmt->execute();
