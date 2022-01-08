@@ -17,6 +17,50 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function getProductByCategory($idcategory){
+        $query = "SELECT * 
+        FROM prodotti, prodotti_forniti 
+        WHERE prodotti.idProdotto = prodotti_forniti.idProdotto 
+        AND prodotti.categoria = ? 
+        AND prodotti_forniti.idProdott IN ( SELECT p.idProdotto, min(p.prezzo) 
+                                            FROM prodotti_forniti p 
+                                            GROUP BY p.idProdotto )"
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i',$idcategory);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getProductData($id, $seller){
+        $query = "SELECT * 
+        FROM prodotti, prodotti_forniti 
+        WHERE prodotti.idProdotto = prodotti_forniti.idProdotto 
+        AND prodotti_forniti.idProdotto = ? 
+        AND prodotti_forniti.email = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('is',$id, $seller);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getSellerByProductId($id){
+        $query = "SELECT * 
+        FROM fornitori, prodotti_forniti 
+        WHERE fornitori.email = prodotti_forniti.email 
+        AND prodotti_forniti.idProdotto = ? 
+        ORDER BY prodotti_forniti.prezzo";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i',$id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     /*public function getRandomPosts($n){
         $stmt = $this->db->prepare("SELECT idarticolo, titoloarticolo, imgarticolo FROM articolo ORDER BY RAND() LIMIT ?");
         $stmt->bind_param('i',$n);
@@ -62,15 +106,7 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getPostByCategory($idcategory){
-        $query = "SELECT idarticolo, titoloarticolo, imgarticolo, anteprimaarticolo, dataarticolo, nome FROM articolo, autore, articolo_ha_categoria WHERE categoria=? AND autore=idautore AND idarticolo=articolo";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param('i',$idcategory);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        return $result->fetch_all(MYSQLI_ASSOC);
-    }
+    
 
     public function getAuthors(){
         $query = "SELECT username, nome, GROUP_CONCAT(DISTINCT nomecategoria) as argomenti FROM categoria, articolo, autore, articolo_ha_categoria WHERE idarticolo=articolo AND categoria=idcategoria AND autore=idautore AND attivo=1 GROUP BY username, nome";
