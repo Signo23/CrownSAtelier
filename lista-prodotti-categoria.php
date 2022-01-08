@@ -8,10 +8,12 @@ $templateParams["nome"] = "listaProdotti.php";
 
 //Categorie Template
 $idcategory = -1;
-if(isset($_GET["id"])){
-    $idcategory = $_GET["id"];
+if(isset($_GET["search"])){
+    $templateParams["search"] = $_GET["search"];
 }
-$templateParams["prodotti"] = $dbh-> getProductByCategory($idcategory);
+if(isset($_GET["id"])){
+    $templateParams["prodotti"] = $dbh-> getProductByCategory($_GET["id"]);
+}
 
 require 'template/base.php';
 debug_to_console('base.php...ok');

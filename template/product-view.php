@@ -1,17 +1,17 @@
 <div class="m-5">
     <div class="row">
         <div class="col-12 col-md-4">
-            <img src="./resources/img/Logo.png" class="card-img-top" alt=""/>
+            <img src="./resources/img/products/<?php echo $templateParams['imgURL']?>" class="card-img-top" alt=""/>
         </div>
         <div class="col-12 col-md-5 mt-3 mt-md-0">
             <div class="border rounded p-4">
-                <h1 class="">Nome prodotto</h1>
-                <p class="">Descrizione prodotto</p>
+                <h1><?php echo $templateParams['nomeProdotto']?></h1>
+                <p><?php echo $templateParams['descrizione']?></p>
             </div>
         </div>
         <div class="col-12 col-md-3 mt-3 mt-md-0">
             <div class="border rounded p-4">
-                <h2>€ 0,00 </h2>
+                <h2>€ <?php echo $templateParams['prezzo']?> </h2>
                 <button class="btn btn-success btn-labeled" type="button">
                     <span class="btn-label">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
@@ -34,18 +34,22 @@
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
+
+    <?php foreach ($templateParams['venditori'] as $venditore) : ?>
         <div class="card mb-3" style="max-width: 540px;">
-                <div class="row g-0">
-                    <div class="col-12">
-                        <div class="card-body">
-                            <h5 class="card-title">Nome Venditore</h5>
-                            <p class="card-text"><small class="text-muted">€ 0,00</small></p>
-                            <div class="d-flex justify-content-end align-items-center">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Aggiungi al Carrello</button>
-                            </div>
+            <div class="row g-0">
+                <div class="col-12">
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo $venditore['nomeAzienda']?></h5>
+                        <p class="card-text"><small class="text-muted">€ <?php echo $venditore['prezzo']?></small></p>
+                        <div class="d-flex justify-content-end align-items-center">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Aggiungi al Carrello</button>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    <?php endforeach;?>
+
     </div>
 </div>
