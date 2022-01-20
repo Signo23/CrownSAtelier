@@ -3,6 +3,7 @@ require_once 'start.php';
 
 //Base Template
 $templateParams["titolo"] = "Crown's Atelier - Categoria";
+$templateParams["nav"] = "navbar.php";
 $templateParams["nome"] = "listaProdotti.php";
 
 //Categorie Template
