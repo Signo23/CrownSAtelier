@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <title>Checkout example · Bootstrap v5.0</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/checkout/">
+
+
+
+    <!-- Bootstrap core CSS -->
+<link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+
+    <!-- Custom styles for this template -->
+    <link href="form-validation.css" rel="stylesheet">
+  </head>
+  <body class="bg-light">
+
+<div class="container">
+  <main>
+    <div class="py-5 text-center">
+      <img src="./resources/img/Logo.png" alt="" style="width: 50px;"/>
+      <h1 class="h3 mb-3 fw-normal">Carrello</h1>
+    </div>
+
+    <div class="row g-5">
+      <div class="col-md-5 col-lg-4 order-md-last">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-primary">Il tuo carrello</span>
+          <span class="badge bg-primary rounded-pill">(numero elementi)</span>
+        </h4>
+        <ul class="list-group mb-3">
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">Nome prodotto (1)</h6>
+              <small class="text-muted">Descrizione</small>
+            </div>
+            <span class="text-muted">€</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">Nome prodotto (2)</h6>
+              <small class="text-muted">Descrizione</small>
+            </div>
+            <span class="text-muted">€</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">Nome prodotto (3)</h6>
+              <small class="text-muted">Descrizione</small>
+            </div>
+            <span class="text-muted">€</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <span>Totale (€)</span>
+            <strong>€</strong>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Informazioni ordine</h4>
+        <form class="needs-validation" novalidate>
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label for="nome" class="form-label">Nome</label>
+              <input type="text" class="form-control" id="nome" placeholder="" value="" required>
+            </div>
+
+            <div class="col-sm-6">
+              <label for="cognome" class="form-label">Cognome</label>
+              <input type="text" class="form-control" id="cognome" placeholder="" value="" required>
+            </div>
+
+            <div class="col-md-12">
+              <label for="luogo" class="form-label">Luogo</label>
+              <div class="google-maps">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2862.85168317362!2d12.233554751211303!3d44.14830267900504!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132ca4dc575f4751%3A0x1ab32da6537902b2!2sVia%20Cesare%20Pavese%2C%2050%2C%2047521%20Cesena%20FC!5e0!3m2!1sit!2sit!4v1642718885434!5m2!1sit!2sit" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="data" class="form-label">Data</label>
+              <select class="form-select" id="data" required>
+                <option value="">Scegli...</option>
+                <option></option>
+              </select>
+              <div class="invalid-feedback">
+                Per favore scegli una data valida.
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="orario" class="form-label">Orario</label>
+              <select class="form-select" id="orario" required>
+                <option value="">Scegli...</option>
+                <option></option>
+              </select>
+              <div class="invalid-feedback">
+                Per favore scegli un orario valido.
+              </div>
+            </div>
+          </div>
+
+          <hr class="my-4">
+
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="pagamento-alla-consegna">
+            <label class="form-check-label" for="agamento-alla-consegna">Pagamento alla consegna.</label>
+          </div>
+
+          <hr class="my-4">
+
+          <button class="w-100 btn btn-primary btn-lg" type="submit">Procedi con l'ordine</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer class="my-5 pt-5 text-muted text-center text-small">
+    <p class="mb-1">&copy; 2017–2021 Company Name</p>
+    <ul class="list-inline">
+      <li class="list-inline-item"><a href="#">Privacy</a></li>
+      <li class="list-inline-item"><a href="#">Terms</a></li>
+      <li class="list-inline-item"><a href="#">Support</a></li>
+    </ul>
+  </footer>
+</div>
+
+
+    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+
+      <script src="form-validation.js"></script>
+  </body>
+</html>
