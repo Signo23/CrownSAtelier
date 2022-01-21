@@ -1,3 +1,4 @@
+<main>
 <div class="m-5">
     <h1>Risultati per "<?php echo $templateParams["search"]; ?>"</h1>
 </div>
@@ -44,3 +45,4 @@
     </div>
 </div>
 
+</main>

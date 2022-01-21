@@ -1,3 +1,4 @@
+<main>
 <div class="m-5">
 </div>
 <div class="row m-5 d-flex justify-content-center">
@@ -12,3 +13,4 @@
         </div>
     <?php endforeach;?>
 </div>
+</main>

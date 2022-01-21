@@ -17,14 +17,12 @@
     </head>
     <body class="d-flex flex-column min-vh-100">
         <?php require($templateParams["nav"])?>
-        <main>
             
             <?php
                 if(isset($templateParams["nome"])){
                     require($templateParams["nome"]);
                 }
             ?>
-        </main>
         
         <footer class="mt-auto text-center text-lg-start bg-light text-muted">
             <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
