@@ -6,4 +6,12 @@ function debug_to_console($data) {
 
     echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
 }
+
+function registerLoggedUser($user){
+    $_SESSION["email"] = $user["email"];
+}
+
+function isUserLoggedIn(){
+    return !empty($_SESSION["email"]);
+}
 ?>
