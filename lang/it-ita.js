@@ -1,6 +1,6 @@
 const index = {
     welcome: "Benvenuti in Crown's Atelier",
-    desc: `Qui potete trovare lo stile che più fa per voi con 
+    desc: `Qui potrete trovare lo stile che più fa per voi con 
     una qualità garantita e con la consegna in giornata 
     direttamente nel Campus di Cesena.
     `,

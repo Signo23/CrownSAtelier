@@ -3,7 +3,12 @@ require_once 'start.php';
 
 //Base Template
 $templateParams["titolo"] = "Crown's Atelier - Categoria";
-$templateParams["nav"] = "navbar.php";
+if(isUserLoggedIn()){
+    $templateParams["nav"] = "navbar.php";
+
+} else {
+    $templateParams["nav"] = "navbar-login.php";
+}
 $templateParams["nome"] = "listaProdotti.php";
 
 //Categorie Template

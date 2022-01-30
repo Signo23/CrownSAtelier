@@ -3,8 +3,12 @@ require_once 'start.php';
 
 //Base Template
 $templateParams["titolo"] = "Crown's Atelier - Prodotto";
-$templateParams["nav"] = "navbar.php";
-$templateParams["nome"] = "product-view.php";
+if(isUserLoggedIn()){
+    $templateParams["nav"] = "navbar.php";
+
+} else {
+    $templateParams["nav"] = "navbar-login.php";
+}$templateParams["nome"] = "product-view.php";
 //Categorie Template
 $idcategoria = -1;
 $seller = 'null';

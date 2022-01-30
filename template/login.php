@@ -16,9 +16,10 @@
             <input class="w-100 btn btn-lg btn-success" type="submit" name="submit" value="Invia"/>
           </form>
           <?php if(isset($templateParmas['errore'])): ?>
-              <p class="mt-5 mb-3 text-muted"><?php echo $templateParmas['errore']?></p>
+              <p class="mt-5 mb-3 text-danger"><?php echo $templateParmas['errore']?></p>
             <?php endif; ?>
-          <p class="mt-5 mb-3 text-muted">Non hai un account? <a href="./signin.php">Registrati</a> </p>
+          <p class="mt-5 mb-3 text-muted">Non hai un account? <a href="./signin.php">Registrati</a></p>
+          <p class="mt-5 mb-3 text-muted"><a href="./index.php">Torna indietro</a> </p>
           <p class="mt-5 mb-3 text-muted">&copy; Crown's Atelier, 2022</p>
       </main>
 
