@@ -15,7 +15,7 @@
                     <li>Puoi aggiungere i tuoi prodotti al catalogo di Crown's Atelier</li>
                     <li>Per ogni acquisto di un tuo prodotto effettuato da un utente riceverai una notifica</li>
                 </ul>
-                <a href="signin-fornitore.php" class="btn btn-success stretched-link">Registrati</a>
+                <a href="./signin-fornitore.php" class="btn btn-success stretched-link">Registrati</a>
             </div>
         </div>
     </div>
@@ -29,7 +29,7 @@
                     <li>Crown's Atelier ti permette di acquistare ci&ograve; che pi&ugrave; fa per te tramite un'ampia scelta di prodotti divisi in categorie</li>
                     <li>Hai la possibilit&agrave; di acquistare prodotti scegliendo tra pi&ugrave; fornitori</li>
                 </ul>
-                <a href="signin-cliente.php" class="btn btn-success stretched-link">Registrati</a>
+                <a href="./signin-cliente.php" class="btn btn-success stretched-link">Registrati</a>
             </div>
         </div>
     </div>
