@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS `my_crownsatelier`;
 CREATE DATABASE  IF NOT EXISTS `my_crownsatelier` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `my_crownsatelier`;
 -- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
@@ -17,36 +18,7 @@ USE `my_crownsatelier`;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
---
--- Table structure for table `carrelli`
---
 
-DROP TABLE IF EXISTS `carrelli`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `carrelli` (
-  `cliente` varchar(100) NOT NULL,
-  `idProdotto` int NOT NULL,
-  `fornitore` varchar(100) NOT NULL,
-  `qnt` int NOT NULL,
-  PRIMARY KEY (`cliente`,`idProdotto`,`fornitore`),
-  KEY `fk_carrelli_cliente_idx` (`cliente`),
-  KEY `fk_carrelli_fornitore_idx` (`fornitore`),
-  KEY `fk_carrelli_idProdotto_idx` (`idProdotto`),
-  CONSTRAINT `fk_carrelli_cliente` FOREIGN KEY (`cliente`) REFERENCES `clienti` (`email`),
-  CONSTRAINT `fk_carrelli_fornitore` FOREIGN KEY (`fornitore`) REFERENCES `prodotti_forniti` (`email`),
-  CONSTRAINT `fk_carrelli_idProdotto` FOREIGN KEY (`idProdotto`) REFERENCES `prodotti_forniti` (`idProdotto`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `carrelli`
---
-
-LOCK TABLES `carrelli` WRITE;
-/*!40000 ALTER TABLE `carrelli` DISABLE KEYS */;
-/*!40000 ALTER TABLE `carrelli` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `categorie`
@@ -82,12 +54,13 @@ DROP TABLE IF EXISTS `clienti`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `clienti` (
+  `idCliente` int NOT NULL AUTO_INCREMENT,
   `email` varchar(100) NOT NULL,
   `password` varchar(512) NOT NULL,
   `telefono` int NOT NULL,
   `nome` varchar(25) NOT NULL,
   `cognome` varchar(25) NOT NULL,
-  PRIMARY KEY (`email`)
+  PRIMARY KEY (`idCliente`, `email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -108,12 +81,13 @@ DROP TABLE IF EXISTS `fornitori`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `fornitori` (
+  `idFornitore` int NOT NULL AUTO_INCREMENT,
   `email` varchar(100) NOT NULL,
   `password` varchar(512) NOT NULL,
   `telefono` int NOT NULL,
   `nomeAzienda` varchar(75) NOT NULL,
   `indirizzo` varchar(150) NOT NULL,
-  PRIMARY KEY (`email`)
+  PRIMARY KEY (`idFornitore`, `email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -123,7 +97,7 @@ CREATE TABLE `fornitori` (
 
 LOCK TABLES `fornitori` WRITE;
 /*!40000 ALTER TABLE `fornitori` DISABLE KEYS */;
-INSERT INTO `fornitori` VALUES ('ciao@gmail.com','pw',1234567890,'Festee','Via dalle palle, 91'),('noncicredo@gmail.com','pw',1234567890,'Stiamo Fallendo s.n.c.','Via dalle palle, 91');
+INSERT INTO `fornitori` VALUES (1,'ciao@gmail.com','pw',1234567890,'Festee','Via dalle palle, 91'),(2, 'noncicredo@gmail.com','pw',1234567890,'Stiamo Fallendo s.n.c.','Via dalle palle, 91');
 /*!40000 ALTER TABLE `fornitori` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -137,13 +111,13 @@ DROP TABLE IF EXISTS `liste_prodotti_ordine`;
 CREATE TABLE `liste_prodotti_ordine` (
   `nOrdine` int NOT NULL,
   `idProdotto` int NOT NULL,
-  `fornitore` varchar(100) NOT NULL,
+  `fornitore` int NOT NULL,
   `qnt` int NOT NULL,
   PRIMARY KEY (`nOrdine`,`idProdotto`,`fornitore`),
   KEY `fk_liste_prodotti_ordine_nOrdine_idx` (`nOrdine`),
   KEY `fk_liste_prodotti_ordine_fornitore_idx` (`fornitore`),
   KEY `fk_liste_prodotti_ordine_idProdotto_idx` (`idProdotto`),
-  CONSTRAINT `fk_liste_prodotti_ordine_fornitore` FOREIGN KEY (`fornitore`) REFERENCES `prodotti_forniti` (`email`),
+  CONSTRAINT `fk_liste_prodotti_ordine_fornitore` FOREIGN KEY (`fornitore`) REFERENCES `prodotti_forniti` (`idFornitore`),
   CONSTRAINT `fk_liste_prodotti_ordine_idProdotto` FOREIGN KEY (`idProdotto`) REFERENCES `prodotti_forniti` (`idProdotto`),
   CONSTRAINT `fk_liste_prodotti_ordine_nOrdine` FOREIGN KEY (`nOrdine`) REFERENCES `ordini` (`nOrdine`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
@@ -193,10 +167,10 @@ CREATE TABLE `ordini` (
   `dataRichiesta` date NOT NULL,
   `stato` varchar(512) NOT NULL,
   `dataEffettuazione` date DEFAULT NULL,
-  `email` varchar(100) NOT NULL,
+  `idCliente` int NOT NULL,
   PRIMARY KEY (`nOrdine`),
-  KEY `fk_ordini_email_idx` (`email`),
-  CONSTRAINT `fk_ordini_email` FOREIGN KEY (`email`) REFERENCES `clienti` (`email`)
+  KEY `fk_ordini_email_idx` (`idCliente`),
+  CONSTRAINT `fk_ordini_email` FOREIGN KEY (`idCliente`) REFERENCES `clienti` (`idCliente`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -246,13 +220,14 @@ DROP TABLE IF EXISTS `prodotti_forniti`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `prodotti_forniti` (
-  `email` varchar(100) NOT NULL,
+  `idFornitore` int NOT NULL,
   `idProdotto` int NOT NULL,
   `prezzo` float NOT NULL,
-  PRIMARY KEY (`email`,`idProdotto`),
-  KEY `fk_prodotti_forniti_email_idx` (`email`),
+  `qntFornita` int NOT NULL,
+  PRIMARY KEY (`idFornitore`,`idProdotto`),
+  KEY `fk_prodotti_forniti_email_idx` (`idFornitore`),
   KEY `fk_prodotti_forniti_idProdotto_idx` (`idProdotto`),
-  CONSTRAINT `fk_prodotti_forniti_email` FOREIGN KEY (`email`) REFERENCES `fornitori` (`email`),
+  CONSTRAINT `fk_prodotti_forniti_email` FOREIGN KEY (`idFornitore`) REFERENCES `fornitori` (`idFornitore`),
   CONSTRAINT `fk_prodotti_forniti_idProdotto` FOREIGN KEY (`idProdotto`) REFERENCES `prodotti` (`idProdotto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -263,7 +238,7 @@ CREATE TABLE `prodotti_forniti` (
 
 LOCK TABLES `prodotti_forniti` WRITE;
 /*!40000 ALTER TABLE `prodotti_forniti` DISABLE KEYS */;
-INSERT INTO `prodotti_forniti` VALUES ('ciao@gmail.com',1,1.99),('ciao@gmail.com',2,1.99),('ciao@gmail.com',3,1.99),('ciao@gmail.com',4,1.99),('ciao@gmail.com',5,1.99),('ciao@gmail.com',6,1.99),('ciao@gmail.com',7,1.99),('ciao@gmail.com',8,1.99),('noncicredo@gmail.com',1,2.29),('noncicredo@gmail.com',2,2.29),('noncicredo@gmail.com',3,2.29);
+INSERT INTO `prodotti_forniti` VALUES (1,1,1.99,4),(1,2,1.99,6),(1,3,1.99,3),(1,4,1.99,12),(1,5,1.99,8),(1,6,1.99,4),(1,7,1.99,6),(1,8,1.99,2),(2,1,2.29,5),(2,2,2.29,7),(2,3,2.29,10);
 /*!40000 ALTER TABLE `prodotti_forniti` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -275,13 +250,13 @@ DROP TABLE IF EXISTS `ricezioni_cliente`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ricezioni_cliente` (
-  `email` varchar(100) NOT NULL,
+  `idCLiente` int NOT NULL,
   `tipo` varchar(10) NOT NULL,
   `data` date NOT NULL,
-  PRIMARY KEY (`email`,`tipo`),
-  KEY `fk_ricezioni_cliente_email_idx` (`email`),
+  PRIMARY KEY (`idCLiente`,`tipo`),
+  KEY `fk_ricezioni_cliente_email_idx` (`idCLiente`),
   KEY `fk_ricezioni_cliente_tipo_idx` (`tipo`),
-  CONSTRAINT `fk_ricezioni_cliente_email` FOREIGN KEY (`email`) REFERENCES `clienti` (`email`),
+  CONSTRAINT `fk_ricezioni_cliente_email` FOREIGN KEY (`idCLiente`) REFERENCES `clienti` (`idCLiente`),
   CONSTRAINT `fk_ricezioni_cliente_tipo` FOREIGN KEY (`tipo`) REFERENCES `notifiche` (`tipo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -303,13 +278,13 @@ DROP TABLE IF EXISTS `ricezioni_fornitori`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ricezioni_fornitori` (
-  `email` varchar(100) NOT NULL,
+  `idFornitore` int NOT NULL,
   `tipo` varchar(10) NOT NULL,
   `data` date NOT NULL,
-  PRIMARY KEY (`email`,`tipo`),
-  KEY `fk_ricezioni_fornitori_email_idx` (`email`),
+  PRIMARY KEY (`idFornitore`,`tipo`),
+  KEY `fk_ricezioni_fornitori_email_idx` (`idFornitore`),
   KEY `fk_ricezioni_fornitori_tipo_idx` (`tipo`),
-  CONSTRAINT `fk_ricezioni_fornitori_email` FOREIGN KEY (`email`) REFERENCES `fornitori` (`email`),
+  CONSTRAINT `fk_ricezioni_fornitori_email` FOREIGN KEY (`idFornitore`) REFERENCES `fornitori` (`idFornitore`),
   CONSTRAINT `fk_ricezioni_fornitori_tipo` FOREIGN KEY (`tipo`) REFERENCES `notifiche` (`tipo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -321,6 +296,37 @@ CREATE TABLE `ricezioni_fornitori` (
 LOCK TABLES `ricezioni_fornitori` WRITE;
 /*!40000 ALTER TABLE `ricezioni_fornitori` DISABLE KEYS */;
 /*!40000 ALTER TABLE `ricezioni_fornitori` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `carrelli`
+--
+
+DROP TABLE IF EXISTS `carrelli`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `carrelli` (
+  `idCliente` int NOT NULL,
+  `idProdotto` int NOT NULL,
+  `idFornitore` int NOT NULL,
+  `qnt` int NOT NULL,
+  PRIMARY KEY (`idCliente`,`idProdotto`,`idFornitore`),
+  KEY `fk_carrelli_cliente_idx` (`idCliente`),
+  KEY `fk_carrelli_fornitore_idx` (`idFornitore`),
+  KEY `fk_carrelli_idProdotto_idx` (`idProdotto`),
+  CONSTRAINT `fk_carrelli_cliente` FOREIGN KEY (`idCliente`) REFERENCES `clienti` (`idCliente`),
+  CONSTRAINT `fk_carrelli_fornitore` FOREIGN KEY (`idFornitore`) REFERENCES `prodotti_forniti` (`idFornitore`),
+  CONSTRAINT `fk_carrelli_idProdotto` FOREIGN KEY (`idProdotto`) REFERENCES `prodotti_forniti` (`idProdotto`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `carrelli`
+--
+
+LOCK TABLES `carrelli` WRITE;
+/*!40000 ALTER TABLE `carrelli` DISABLE KEYS */;
+/*!40000 ALTER TABLE `carrelli` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
