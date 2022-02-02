@@ -1,6 +1,7 @@
 <main class="pt-md-5">
 
 <div class="m-5 pt-md-5">
+    <img src="./resources/img/Logo.png" alt="" style="width: 300px;"/>
     <h1>Registrazione</h1>
 </div>
 
