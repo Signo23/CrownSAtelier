@@ -1,4 +1,3 @@
-DROP DATABASE IF EXISTS `my_crownsatelier`;
 CREATE DATABASE  IF NOT EXISTS `my_crownsatelier` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `my_crownsatelier`;
 -- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
@@ -18,7 +17,36 @@ USE `my_crownsatelier`;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+--
+-- Table structure for table `carrelli`
+--
 
+DROP TABLE IF EXISTS `carrelli`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `carrelli` (
+  `idCliente` int NOT NULL,
+  `idProdotto` int NOT NULL,
+  `idFornitore` int NOT NULL,
+  `qnt` int NOT NULL,
+  PRIMARY KEY (`idCliente`,`idProdotto`,`idFornitore`),
+  KEY `fk_carrelli_cliente_idx` (`idCliente`),
+  KEY `fk_carrelli_fornitore_idx` (`idFornitore`),
+  KEY `fk_carrelli_idProdotto_idx` (`idProdotto`),
+  CONSTRAINT `fk_carrelli_cliente` FOREIGN KEY (`idCliente`) REFERENCES `clienti` (`idCliente`),
+  CONSTRAINT `fk_carrelli_fornitore` FOREIGN KEY (`idFornitore`) REFERENCES `prodotti_forniti` (`idFornitore`),
+  CONSTRAINT `fk_carrelli_idProdotto` FOREIGN KEY (`idProdotto`) REFERENCES `prodotti_forniti` (`idProdotto`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `carrelli`
+--
+
+LOCK TABLES `carrelli` WRITE;
+/*!40000 ALTER TABLE `carrelli` DISABLE KEYS */;
+/*!40000 ALTER TABLE `carrelli` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `categorie`
@@ -57,10 +85,10 @@ CREATE TABLE `clienti` (
   `idCliente` int NOT NULL AUTO_INCREMENT,
   `email` varchar(100) NOT NULL,
   `password` varchar(512) NOT NULL,
-  `telefono` int NOT NULL,
+  `telefono` varchar(15) NOT NULL,
   `nome` varchar(25) NOT NULL,
   `cognome` varchar(25) NOT NULL,
-  PRIMARY KEY (`idCliente`, `email`)
+  PRIMARY KEY (`idCliente`,`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -84,11 +112,11 @@ CREATE TABLE `fornitori` (
   `idFornitore` int NOT NULL AUTO_INCREMENT,
   `email` varchar(100) NOT NULL,
   `password` varchar(512) NOT NULL,
-  `telefono` int NOT NULL,
+  `telefono` varchar(15) NOT NULL,
   `nomeAzienda` varchar(75) NOT NULL,
   `indirizzo` varchar(150) NOT NULL,
-  PRIMARY KEY (`idFornitore`, `email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+  PRIMARY KEY (`idFornitore`,`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,7 +125,7 @@ CREATE TABLE `fornitori` (
 
 LOCK TABLES `fornitori` WRITE;
 /*!40000 ALTER TABLE `fornitori` DISABLE KEYS */;
-INSERT INTO `fornitori` VALUES (1,'ciao@gmail.com','pw',1234567890,'Festee','Via dalle palle, 91'),(2, 'noncicredo@gmail.com','pw',1234567890,'Stiamo Fallendo s.n.c.','Via dalle palle, 91');
+INSERT INTO `fornitori` VALUES (1,'ciao@gmail.com','pw','1234567890','Festee','Via dalle palle, 91'),(2,'noncicredo@gmail.com','pw','1234567890','Stiamo Fallendo s.n.c.','Via dalle palle, 91'),(6,'signettohotmail.it@gmail.com','$6$rounds=5000$usesomesillystri$ucGIpU91gD.char2IelSbVUZdRFRT3pCNwCNaF9Grv6kVDYgmwtQl0dZBOKADyxCSAAuou5Tg.vtQwfu555MC1','1234567890','Lorenzo Signoretti','Via M. Cedrini 16'),(7,'lory4846@hotmail.it','$6$rounds=5000$usesomesillystri$ucGIpU91gD.char2IelSbVUZdRFRT3pCNwCNaF9Grv6kVDYgmwtQl0dZBOKADyxCSAAuou5Tg.vtQwfu555MC1','3487894282','Lorenzo Signoretti','Via M. Cedrini 16');
 /*!40000 ALTER TABLE `fornitori` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -256,7 +284,7 @@ CREATE TABLE `ricezioni_cliente` (
   PRIMARY KEY (`idCLiente`,`tipo`),
   KEY `fk_ricezioni_cliente_email_idx` (`idCLiente`),
   KEY `fk_ricezioni_cliente_tipo_idx` (`tipo`),
-  CONSTRAINT `fk_ricezioni_cliente_email` FOREIGN KEY (`idCLiente`) REFERENCES `clienti` (`idCLiente`),
+  CONSTRAINT `fk_ricezioni_cliente_email` FOREIGN KEY (`idCLiente`) REFERENCES `clienti` (`idCliente`),
   CONSTRAINT `fk_ricezioni_cliente_tipo` FOREIGN KEY (`tipo`) REFERENCES `notifiche` (`tipo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -297,45 +325,6 @@ LOCK TABLES `ricezioni_fornitori` WRITE;
 /*!40000 ALTER TABLE `ricezioni_fornitori` DISABLE KEYS */;
 /*!40000 ALTER TABLE `ricezioni_fornitori` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `carrelli`
---
-
-DROP TABLE IF EXISTS `carrelli`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `carrelli` (
-  `idCliente` int NOT NULL,
-  `idProdotto` int NOT NULL,
-  `idFornitore` int NOT NULL,
-  `qnt` int NOT NULL,
-  PRIMARY KEY (`idCliente`,`idProdotto`,`idFornitore`),
-  KEY `fk_carrelli_cliente_idx` (`idCliente`),
-  KEY `fk_carrelli_fornitore_idx` (`idFornitore`),
-  KEY `fk_carrelli_idProdotto_idx` (`idProdotto`),
-  CONSTRAINT `fk_carrelli_cliente` FOREIGN KEY (`idCliente`) REFERENCES `clienti` (`idCliente`),
-  CONSTRAINT `fk_carrelli_fornitore` FOREIGN KEY (`idFornitore`) REFERENCES `prodotti_forniti` (`idFornitore`),
-  CONSTRAINT `fk_carrelli_idProdotto` FOREIGN KEY (`idProdotto`) REFERENCES `prodotti_forniti` (`idProdotto`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `carrelli`
---
-
-LOCK TABLES `carrelli` WRITE;
-/*!40000 ALTER TABLE `carrelli` DISABLE KEYS */;
-/*!40000 ALTER TABLE `carrelli` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping events for database 'my_crownsatelier'
---
-
---
--- Dumping routines for database 'my_crownsatelier'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -346,4 +335,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-20 21:40:33
+-- Dump completed on 2022-02-03 21:18:28
