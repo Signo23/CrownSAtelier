@@ -13,7 +13,7 @@
               <input type="password" class="form-control" id="password" name="password" placeholder="Password">
               <label for="password">Password</label>
             </div>
-            <input class="w-100 btn btn-lg btn-success" type="submit" name="submit" value="Invia"/>
+            <input class="w-100 btn btn-lg btn-success" type="submit" name="submit" value="Accedi"/>
           </form>
           <?php if(isset($templateParmas['errore'])): ?>
               <p class="mt-5 mb-3 text-danger"><?php echo $templateParmas['errore']?></p>
