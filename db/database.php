@@ -69,6 +69,8 @@ class DatabaseHelper{
         $stmt->execute();
         $result = $stmt->get_result();
 
+        $_SESSION['tipo'] = 'fornitore';
+
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 

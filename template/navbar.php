@@ -7,6 +7,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
+        <?php if (isset($_SESSION['tipo']) && $_SESSION['tipo'] !='fornitore'): ?>
         <div class="collapse navbar-collapse " id="navbars">   
             <form class="d-flex me-auto mb-2 mb-md-0">
                 <input class="form-control me-2" type="search" placeholder="Cerca" aria-label="Cerca">
@@ -40,5 +41,6 @@
             </ul>
             
         </div>
+        <?php endif;?>
     </div>
 </nav>
