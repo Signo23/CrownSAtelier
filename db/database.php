@@ -62,7 +62,7 @@ class DatabaseHelper{
     }
 
     public function checkLogin($email, $password){
-        $query = "SELECT email FROM fornitori WHERE email = ? AND password = ?";
+        $query = "SELECT * FROM fornitori WHERE email = ? AND password = ?";
         $cryptedPw = crypt($password, '$6$rounds=5000$usesomesillystringforsalt$');
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('ss',$email, $cryptedPw);

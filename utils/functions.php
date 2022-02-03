@@ -8,10 +8,10 @@ function debug_to_console($data) {
 }
 
 function registerLoggedUser($user){
-    $_SESSION["email"] = $user["email"];
+    $_SESSION["id"] = $user["idFornitore"];
 }
 
 function isUserLoggedIn(){
-    return !empty($_SESSION["email"]);
+    return !empty($_SESSION["id"]);
 }
 ?>

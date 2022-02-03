@@ -15,7 +15,7 @@ if(isUserLoggedIn()){
     require 'index.php';
 } else {
     $templateParams["titolo"] = "Crown's Atelier - Login";
-    $templateParams["nome"] = "login.php";
+    $templateParams["nome"] = "template/login.php";
     $templateParmas["css"] = "login.css";
     require 'template/no-nav-base.php';
 }
