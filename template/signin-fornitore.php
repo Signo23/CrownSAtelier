@@ -1,60 +1,47 @@
 <body class="text-center">
 
   <main class="form-signin">
-    <form>
-      <img src="./resources/img/Logo.png" alt="" style="width: 50px;"/>
-      <p>Non sei ancora registrato?</p>
-      <h1 class="h3 mb-3 fw-normal">Crea un nuovo account</h1>
+    <img src="./resources/img/Logo.png" alt="" style="width: 150px;"/>
+    <h1 class="h3 mb-3 fw-normal">Crea un nuovo account</h1>
 
-      <form class="needs-validation" novalidate>
-        <div class="form-floating">
-          <label for="nomeNegozio" class="form-label">Nome del negozio</label>
-          <input type="text" class="form-control" id="nomeNegozio" placeholder="" value="" required>
-          <div class="invalid-feedback">
-            Il nome del negozio &egrave; obbligatorio.
-          </div>
-        </div>
-        <div class="form-floating">
-          <label for="partitaIVA" class="form-label">Partita IVA</label>
-          <input type="text" class="form-control" id="partitaIVA" placeholder="" value="" required>
-          <div class="invalid-feedback">
-            La partita IVA &egrave; obbligatoria.
-          </div>
-        </div>
-        <div class="form-floating">
-          <label for="indirizzo" class="form-label">Indirizzo</label>
-          <input type="text" class="form-control" id="indirizzo" placeholder="" value="" required>
-          <div class="invalid-feedback">
-            L'indirizzo &egrave; obbligatorio.
-          </div>
-        </div>
-        <div class="form-floating">
-          <label for="cellulare" class="form-label">Cellulare</label>
-          <input type="text" class="form-control" id="cellulare" placeholder="" value="" required>
-          <div class="invalid-feedback">
-            Il cellulare &egrave; obbligatorio.
-          </div>
-        </div>
-        <div class="form-floating">
-          <label for="email" class="form-label">Email</label>
-          <input type="text" class="form-control" id="email" placeholder="" value="" required>
-          <div class="invalid-feedback">
-            L'email &egrave; obbligatoria.
-          </div>
-        </div>
-        <div class="form-floating">
-          <label for="password" class="form-label">Password</label>
-          <input type="text" class="form-control" id="password" placeholder="" value="" required>
-          <div class="invalid-feedback">
-            La password &egrave; obbligatoria.
-          </div>
-        </div>
-      </form>
+    <form action="#" method="POST">
 
-      <hr class="my-4">
+    <div class="form-floating">
+        <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+        <label for="email">Email</label>
+      </div>
 
-      <button class="w-100 btn btn-lg btn-primary" type="submit">Iscriviti</button>
-      <p class="mt-5 mb-3 text-muted">&copy; Crown's Atelier, 2022</p>
+      <div class="form-floating">
+        <input type="password" class="form-control" id="password" name="password" placeholder="password" required>
+        <label for="password">Password</label>
+      </div>
+
+      <div class="form-floating mt-1">
+        <input type="text" class="form-control" id="nomeNegozio" name="nomeNegozio" placeholder="Nome Azienda S.N.C." required>
+        <label for="nomeNegozio">Nome del negozio</label>
+      </div>
+
+      <div class="form-floating">
+        <input type="number" class="form-control" id="partitaIVA" name="partitaIVA" placeholder="000000000000000000" required>
+        <label for="partitaIVA">Partita IVA</label>
+      </div>
+
+      <div class="form-floating">
+        <input type="text" class="form-control" id="indirizzo" name="indirizzo" placeholder=" Via Roma 1" required>
+        <label for="indirizzo">Indirizzo</label>
+      </div>
+
+      <div class="form-floating">
+        <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="1234567890" required> 
+        <label for="telefono">Telefono</label>
+      </div>
+
+
+      <input class="w-100 btn btn-lg btn-success" type="submit" name="submit" value="Registrati"/>
     </form>
+
+    <hr class="my-4">
+
+    <p class="mt-5 mb-3 text-muted">&copy; Crown's Atelier, 2022</p>
   </main>
 </body>
