@@ -17,7 +17,7 @@
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $prodotto['nome'];?></h5>
                             <p class="card-text"><?php echo $prodotto['descrizione'];?></p>
-                            <a href="product.php?id=<?php echo $prodotto['idProdotto']?>&seller=<?php echo $prodotto['email']?>" class="stretched-link"></a>
+                            <a href="product.php?id=<?php echo $prodotto['idProdotto']?>&seller=<?php echo $prodotto['idFornitore']?>" class="stretched-link"></a>
                             <div class="d-flex justify-content-end align-items-center">
                                 <small class="text-muted">€ <?php echo $prodotto['prezzo'];?></small>
                             </div>
@@ -32,7 +32,7 @@
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $prodotto['nome'];?></h5>
                         <p class="card-text"><?php echo $prodotto['descrizione'];?></p>
-                        <a href="product.php?id=<?php echo $prodotto['idProdotto']?>&seller=<?php echo $prodotto['email']?>" class="stretched-link"></a>
+                        <a href="product.php?id=<?php echo $prodotto['idProdotto']?>&seller=<?php echo $prodotto['idFornitore']?>" class="stretched-link"></a>
                         <div class="d-flex justify-content-end align-items-center">
                             <small class="text-muted">€ <?php echo $prodotto['prezzo'];?></small>
                         </div>
