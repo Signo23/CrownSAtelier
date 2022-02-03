@@ -1,4 +1,5 @@
-CREATE DATABASE  IF NOT EXISTS `my_crownsatelier` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+DROP database `my_crownsatelier`;
+CREATE DATABASE `my_crownsatelier` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `my_crownsatelier`;
 -- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
 --
@@ -75,47 +76,23 @@ INSERT INTO `categorie` VALUES (1,'Corone','Corone d’alloro relative ad ogni c
 UNLOCK TABLES;
 
 --
--- Table structure for table `clienti`
---
-
-DROP TABLE IF EXISTS `clienti`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `clienti` (
-  `idCliente` int NOT NULL AUTO_INCREMENT,
-  `email` varchar(100) NOT NULL,
-  `password` varchar(512) NOT NULL,
-  `telefono` varchar(15) NOT NULL,
-  `nome` varchar(25) NOT NULL,
-  `cognome` varchar(25) NOT NULL,
-  PRIMARY KEY (`idCliente`,`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `clienti`
---
-
-LOCK TABLES `clienti` WRITE;
-/*!40000 ALTER TABLE `clienti` DISABLE KEYS */;
-/*!40000 ALTER TABLE `clienti` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `fornitori`
 --
 
-DROP TABLE IF EXISTS `fornitori`;
+DROP TABLE IF EXISTS `utenti`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `fornitori` (
-  `idFornitore` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `utenti` (
+  `idUtente` int NOT NULL AUTO_INCREMENT,
   `email` varchar(100) NOT NULL,
   `password` varchar(512) NOT NULL,
   `telefono` varchar(15) NOT NULL,
-  `nomeAzienda` varchar(75) NOT NULL,
-  `indirizzo` varchar(150) NOT NULL,
-  PRIMARY KEY (`idFornitore`,`email`)
+  `nomeAzienda` varchar(75),
+  `indirizzo` varchar(150),
+  `nome` varchar(25),
+  `cognome` varchar(25),
+  `tipo` varchar(25) NOT NULL,
+  PRIMARY KEY (`idUtente`,`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -123,10 +100,9 @@ CREATE TABLE `fornitori` (
 -- Dumping data for table `fornitori`
 --
 
-LOCK TABLES `fornitori` WRITE;
-/*!40000 ALTER TABLE `fornitori` DISABLE KEYS */;
-INSERT INTO `fornitori` VALUES (1,'ciao@gmail.com','pw','1234567890','Festee','Via dalle palle, 91'),(2,'noncicredo@gmail.com','pw','1234567890','Stiamo Fallendo s.n.c.','Via dalle palle, 91'),(6,'signettohotmail.it@gmail.com','$6$rounds=5000$usesomesillystri$ucGIpU91gD.char2IelSbVUZdRFRT3pCNwCNaF9Grv6kVDYgmwtQl0dZBOKADyxCSAAuou5Tg.vtQwfu555MC1','1234567890','Lorenzo Signoretti','Via M. Cedrini 16'),(7,'lory4846@hotmail.it','$6$rounds=5000$usesomesillystri$ucGIpU91gD.char2IelSbVUZdRFRT3pCNwCNaF9Grv6kVDYgmwtQl0dZBOKADyxCSAAuou5Tg.vtQwfu555MC1','3487894282','Lorenzo Signoretti','Via M. Cedrini 16');
-/*!40000 ALTER TABLE `fornitori` ENABLE KEYS */;
+LOCK TABLES `utenti` WRITE;
+/*!40000 ALTER TABLE `utenti` DISABLE KEYS */;
+/*!40000 ALTER TABLE `utenti` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -139,13 +115,13 @@ DROP TABLE IF EXISTS `liste_prodotti_ordine`;
 CREATE TABLE `liste_prodotti_ordine` (
   `nOrdine` int NOT NULL,
   `idProdotto` int NOT NULL,
-  `fornitore` int NOT NULL,
+  `idFornitore` int NOT NULL,
   `qnt` int NOT NULL,
-  PRIMARY KEY (`nOrdine`,`idProdotto`,`fornitore`),
+  PRIMARY KEY (`nOrdine`,`idProdotto`,`idFornitore`),
   KEY `fk_liste_prodotti_ordine_nOrdine_idx` (`nOrdine`),
-  KEY `fk_liste_prodotti_ordine_fornitore_idx` (`fornitore`),
+  KEY `fk_liste_prodotti_ordine_fornitore_idx` (`idFornitore`),
   KEY `fk_liste_prodotti_ordine_idProdotto_idx` (`idProdotto`),
-  CONSTRAINT `fk_liste_prodotti_ordine_fornitore` FOREIGN KEY (`fornitore`) REFERENCES `prodotti_forniti` (`idFornitore`),
+  CONSTRAINT `fk_liste_prodotti_ordine_fornitore` FOREIGN KEY (`idFornitore`) REFERENCES `prodotti_forniti` (`idFornitore`),
   CONSTRAINT `fk_liste_prodotti_ordine_idProdotto` FOREIGN KEY (`idProdotto`) REFERENCES `prodotti_forniti` (`idProdotto`),
   CONSTRAINT `fk_liste_prodotti_ordine_nOrdine` FOREIGN KEY (`nOrdine`) REFERENCES `ordini` (`nOrdine`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
@@ -198,7 +174,7 @@ CREATE TABLE `ordini` (
   `idCliente` int NOT NULL,
   PRIMARY KEY (`nOrdine`),
   KEY `fk_ordini_email_idx` (`idCliente`),
-  CONSTRAINT `fk_ordini_email` FOREIGN KEY (`idCliente`) REFERENCES `clienti` (`idCliente`)
+  CONSTRAINT `fk_ordini_email` FOREIGN KEY (`idCliente`) REFERENCES `utente` (`idUtente`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -255,7 +231,7 @@ CREATE TABLE `prodotti_forniti` (
   PRIMARY KEY (`idFornitore`,`idProdotto`),
   KEY `fk_prodotti_forniti_email_idx` (`idFornitore`),
   KEY `fk_prodotti_forniti_idProdotto_idx` (`idProdotto`),
-  CONSTRAINT `fk_prodotti_forniti_email` FOREIGN KEY (`idFornitore`) REFERENCES `fornitori` (`idFornitore`),
+  CONSTRAINT `fk_prodotti_forniti_email` FOREIGN KEY (`idFornitore`) REFERENCES `utenti` (`idUtente`),
   CONSTRAINT `fk_prodotti_forniti_idProdotto` FOREIGN KEY (`idProdotto`) REFERENCES `prodotti` (`idProdotto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -284,7 +260,7 @@ CREATE TABLE `ricezioni_cliente` (
   PRIMARY KEY (`idCLiente`,`tipo`),
   KEY `fk_ricezioni_cliente_email_idx` (`idCLiente`),
   KEY `fk_ricezioni_cliente_tipo_idx` (`tipo`),
-  CONSTRAINT `fk_ricezioni_cliente_email` FOREIGN KEY (`idCLiente`) REFERENCES `clienti` (`idCliente`),
+  CONSTRAINT `fk_ricezioni_cliente_email` FOREIGN KEY (`idCLiente`) REFERENCES `utenti` (`idUtente`),
   CONSTRAINT `fk_ricezioni_cliente_tipo` FOREIGN KEY (`tipo`) REFERENCES `notifiche` (`tipo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -312,7 +288,7 @@ CREATE TABLE `ricezioni_fornitori` (
   PRIMARY KEY (`idFornitore`,`tipo`),
   KEY `fk_ricezioni_fornitori_email_idx` (`idFornitore`),
   KEY `fk_ricezioni_fornitori_tipo_idx` (`tipo`),
-  CONSTRAINT `fk_ricezioni_fornitori_email` FOREIGN KEY (`idFornitore`) REFERENCES `fornitori` (`idFornitore`),
+  CONSTRAINT `fk_ricezioni_fornitori_email` FOREIGN KEY (`idFornitore`) REFERENCES `utenti` (`idUtente`),
   CONSTRAINT `fk_ricezioni_fornitori_tipo` FOREIGN KEY (`tipo`) REFERENCES `notifiche` (`tipo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;

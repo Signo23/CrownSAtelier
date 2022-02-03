@@ -62,23 +62,21 @@ class DatabaseHelper{
     }
 
     public function checkLogin($email, $password){
-        $query = "SELECT * FROM fornitori WHERE email = ? AND password = ?";
+        $query = "SELECT * FROM utenti WHERE email = ? AND password = ?";
         $cryptedPw = crypt($password, '$6$rounds=5000$usesomesillystringforsalt$');
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('ss',$email, $cryptedPw);
         $stmt->execute();
         $result = $stmt->get_result();
 
-        $_SESSION['tipo'] = 'fornitore';
-
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     public function signinFornitore($email, $password, $telefono, $nome, $via){
         $cryptedPw = crypt($password, '$6$rounds=5000$usesomesillystringforsalt$');
-        $query = "INSERT INTO fornitori (email, password, telefono, nomeAzienda, indirizzo) VALUES (?,?,?,?,?)";
+        $query = "INSERT INTO fornitori (email, password, telefono, nomeAzienda, indirizzo, tipo) VALUES (?,?,?,?,?,?)";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('sssss',$email, $cryptedPw, $telefono, $nome, $via);
+        $stmt->bind_param('ssssss',$email, $cryptedPw, $telefono, $nome, $via, 'fornitori') ;
         
         $stmt->execute();
 
