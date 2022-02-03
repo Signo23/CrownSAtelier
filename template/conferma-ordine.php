@@ -63,10 +63,7 @@
 
             <div class="col-md-6">
               <label for="data" class="form-label">Data</label>
-              <select class="form-select" id="data" required>
-                <option value="">Scegli...</option>
-                <option></option>
-              </select>
+              <input class="form-select" type="date" id="data" name="data" required/>
               <div class="invalid-feedback">
                 Per favore scegli una data valida.
               </div>
@@ -74,10 +71,7 @@
 
             <div class="col-md-6">
               <label for="orario" class="form-label">Orario</label>
-              <select class="form-select" id="orario" required>
-                <option value="">Scegli...</option>
-                <option></option>
-              </select>
+              <input class="form-select" type="time" id="orario" name="orario" required/>
               <div class="invalid-feedback">
                 Per favore scegli un orario valido.
               </div>
