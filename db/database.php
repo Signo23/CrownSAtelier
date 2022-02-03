@@ -5,7 +5,7 @@ class DatabaseHelper{
     public function __construct($servername, $username, $password, $dbname, $port){
         $this->db = new mysqli($servername, $username, $password, $dbname, $port);
         if ($this->db->connect_error) {
-            die("Connection failed: " . $db->connect_error);
+            die("Connection failed: " . $this->db->connect_error);
         }        
     }
 
@@ -38,9 +38,9 @@ class DatabaseHelper{
         FROM prodotti, prodotti_forniti 
         WHERE prodotti.idProdotto = prodotti_forniti.idProdotto 
         AND prodotti_forniti.idProdotto = ? 
-        AND prodotti_forniti.email = ?";
+        AND prodotti_forniti.idFornitore = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('is',$id, $seller);
+        $stmt->bind_param('ii',$id, $seller);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -50,7 +50,7 @@ class DatabaseHelper{
     public function getSellerByProductId($id){
         $query = "SELECT * 
         FROM fornitori, prodotti_forniti 
-        WHERE fornitori.email = prodotti_forniti.email 
+        WHERE fornitori.idFornitore = prodotti_forniti.idFornitore 
         AND prodotti_forniti.idProdotto = ? 
         ORDER BY prodotti_forniti.prezzo";
         $stmt = $this->db->prepare($query);
@@ -61,14 +61,37 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function checkLogin($username, $password){
+    public function checkLogin($email, $password){
         $query = "SELECT email FROM fornitori WHERE email = ? AND password = ?";
+        $cryptedPw = crypt($password, '$6$rounds=5000$usesomesillystringforsalt$');
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('ss',$username, $password);
+        $stmt->bind_param('ss',$email, $cryptedPw);
         $stmt->execute();
         $result = $stmt->get_result();
 
         return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function signinFornitore($email, $password, $telefono, $nome, $via){
+        $cryptedPw = crypt($password, '$6$rounds=5000$usesomesillystringforsalt$');
+        $query = "INSERT INTO fornitori (email, password, telefono, nomeAzienda, indirizzo) VALUES (?,?,?,?,?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('sssss',$email, $cryptedPw, $telefono, $nome, $via);
+        
+        $stmt->execute();
+
+        return $stmt->insert_id;
+    }
+
+    public function signinCliente($email, $password, $telefono, $nome, $cognome){
+        $cryptedPw = crypt($password, '$6$rounds=5000$usesomesillystringforsalt$');
+        $query = "INSERT INTO fornitori (email, password, telefono, nomeAzienda, indirizzo) VALUES (?,?,?,?,?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('sssss',$email, $cryptedPw, $telefono, $nome, $via);
+        
+        $stmt->execute();
+
+        return $stmt->insert_id;
     }
 
     /*public function getRandomPosts($n){
