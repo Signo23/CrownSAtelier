@@ -12,7 +12,7 @@ if(isset($_POST["email"]) && isset($_POST["password"])){
 }
 
 if(isUserLoggedIn()){
-    require 'index.php';
+    header("location: index.php");
 } else {
     $templateParams["titolo"] = "Crown's Atelier - Login";
     $templateParams["nome"] = "template/login.php";

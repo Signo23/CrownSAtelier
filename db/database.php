@@ -74,9 +74,9 @@ class DatabaseHelper{
 
     public function signinFornitore($email, $password, $telefono, $nome, $via){
         $cryptedPw = crypt($password, '$6$rounds=5000$usesomesillystringforsalt$');
-        $query = "INSERT INTO fornitori (email, password, telefono, nomeAzienda, indirizzo, tipo) VALUES (?,?,?,?,?,?)";
+        $query = "INSERT INTO utenti (email, password, telefono, nomeAzienda, indirizzo, tipo) VALUES (?,?,?,?,?,'fornitore')";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('ssssss',$email, $cryptedPw, $telefono, $nome, $via, 'fornitori') ;
+        $stmt->bind_param('sssss',$email, $cryptedPw, $telefono, $nome, $via) ;
         
         $stmt->execute();
 
@@ -85,9 +85,9 @@ class DatabaseHelper{
 
     public function signinCliente($email, $password, $telefono, $nome, $cognome){
         $cryptedPw = crypt($password, '$6$rounds=5000$usesomesillystringforsalt$');
-        $query = "INSERT INTO fornitori (email, password, telefono, nomeAzienda, indirizzo) VALUES (?,?,?,?,?)";
+        $query = "INSERT INTO utenti (email, password, telefono, nome, cognome, tipo) VALUES (?,?,?,?,?,'cliente')";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('sssss',$email, $cryptedPw, $telefono, $nome, $via);
+        $stmt->bind_param('sssss',$email, $cryptedPw, $telefono, $nome, $cognome) ;
         
         $stmt->execute();
 

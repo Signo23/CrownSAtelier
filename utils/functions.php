@@ -8,7 +8,8 @@ function debug_to_console($data) {
 }
 
 function registerLoggedUser($user){
-    $_SESSION["id"] = $user["idFornitore"];
+    $_SESSION["id"] = $user["idUtente"];
+    $_SESSION["tipo"] = $user["tipo"];
 }
 
 function isUserLoggedIn(){
