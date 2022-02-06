@@ -1,54 +1,41 @@
 <body class="text-center">
 
   <main class="form-signin">
-    <form>
-      <img src="./resources/img/Logo.png" alt="" style="width: 300px;"/>
-      <p>Non sei ancora registrato?</p>
-      <h1 class="h3 mb-3 fw-normal">Crea un nuovo account</h1>
+    <img src="./resources/img/Logo.png" alt="" style="width: 150px;"/>
+    <h1 class="h3 mb-3 fw-normal">Crea un nuovo account</h1>
 
-      <form class="needs-validation" novalidate>
-        <div class="form-floating mb-2">
-          <label for="nome" class="form-label">Nome</label>
-          <input type="text" class="form-control" id="nome" placeholder="" value="" required>
-          <div class="invalid-feedback">
-            Il nome &egrave; obbligatorio.
-          </div>
-        </div>
-        <div class="form-floating mb-2">
-          <label for="cognome" class="form-label">Cognome</label>
-          <input type="text" class="form-control" id="cognome" placeholder="" value="" required>
-          <div class="invalid-feedback">
-            Il cognome &egrave; obbligatorio.
-          </div>
-        </div>
-        <div class="form-floating mb-2">
-          <label for="cellulare" class="form-label">Cellulare</label>
-          <input type="text" class="form-control" id="cellulare" placeholder="" value="" required>
-          <div class="invalid-feedback">
-            Il cellulare &egrave; obbligatorio.
-          </div>
-        </div>
-        <div class="form-floating mb-2">
-          <label for="email" class="form-label">Email</label>
-          <input type="text" class="form-control" id="email" placeholder="" value="" required>
-          <div class="invalid-feedback">
-            L'email &egrave; obbligatoria.
-          </div>
-        </div>
-        <div class="form-floating">
-          <label for="password" class="form-label">Password</label>
-          <input type="text" class="form-control" id="password" placeholder="" value="" required>
-          <div class="invalid-feedback">
-            La password &egrave; obbligatoria.
-          </div>
-        </div>
-      </form>
+    <form action="#" method="POST">
 
-      <hr class="my-4">
+      <div class="form-floating mb-2">
+        <input type="text" class="form-control" id="nome" name ="nome" placeholder="Mario" required>
+        <label for="nome" >Nome</label>
+      </div>
 
-      <button class="w-100 btn btn-lg btn-success" type="submit">Iscriviti</button>
-      <p class="mt-5 mb-3 text-muted">&copy; Crown's Atelier, 2022</p>
+      <div class="form-floating mb-2">
+        <input type="text" class="form-control" id="cognome" name="cognome" placeholder="Rossi" required>
+        <label for="cognome" >Cognome</label>
+      </div>
+
+      <div class="form-floating mb-2">
+        <input type="tel" class="form-control" id="cellulare" name="cellulare" placeholder="1234567890" required>
+        <label for="cellulare" >Cellulare</label>
+      </div>
+
+      <div class="form-floating mb-2">
+        <input type="email" class="form-control" id="email" name="email" placeholder="example@email.com" required>
+        <label for="email" >Email</label>
+      </div>
+
+      <div class="form-floating">
+        <input type="password" class="form-control" id="password" name="password" placeholder="password" required>
+        <label for="password" >Password</label>
+      </div>
+
+      <hr class="my-4"/>
+      <input class="w-100 btn btn-lg btn-success" type="submit" name="submit" value="Registrati"/>
     </form>
+
+    <p class="mt-5 mb-3 text-muted">&copy; Crown's Atelier, 2022</p>
   </main>
 
 </body>

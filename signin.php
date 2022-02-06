@@ -7,7 +7,11 @@ $templateParams["titolo"] = "Crown's Atelier - Signin";
 if(isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["telefono"]) && isset($_POST["nomeNegozio"]) && isset($_POST["indirizzo"])){
     $dbh->signinFornitore($_POST["email"], $_POST["password"], $_POST["telefono"], $_POST["nomeNegozio"], $_POST["indirizzo"]);
     require('login.php');
-} elseif(isset($_GET['id'])){
+} elseif(isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["cellulare"]) && isset($_POST["nome"]) && isset($_POST["cognome"])) {
+    $dbh->signingCliente($_POST["email"], $_POST["password"], $_POST["cellulare"], $_POST["nome"], $_POST["cognome"]);
+    require('login.php');
+} 
+elseif(isset($_GET['id'])){
         $templateParams["titolo"] = "Crown's Atelier - Signin ".$_GET['id'];
         $templateParams["nome"] = "signin-" .$_GET['id'] .".php";
         $templateParmas["css"] = "signin.css";
