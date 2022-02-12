@@ -49,9 +49,10 @@ class DatabaseHelper{
 
     public function getSellerByProductId($id){
         $query = "SELECT * 
-        FROM fornitori, prodotti_forniti 
-        WHERE fornitori.idFornitore = prodotti_forniti.idFornitore 
-        AND prodotti_forniti.idProdotto = ? 
+        FROM utenti, prodotti_forniti 
+        WHERE utenti.idUtente = prodotti_forniti.idFornitore 
+        AND prodotti_forniti.idProdotto = ?
+        AND utenti.tipo = 'fornitore' 
         ORDER BY prodotti_forniti.prezzo";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i',$id);

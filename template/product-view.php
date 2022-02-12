@@ -13,7 +13,7 @@
         <div class="col-12 col-md-3 mt-3 mt-md-0">
             <div class="border rounded p-4">
                 <h2>€ <?php echo $templateParams['prezzo']?> </h2>
-                <button class="btn btn-success btn-labeled" type="button">
+                <button class="btn btn-success btn-labeled" type="button" action="#">
                     <span class="btn-label">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
                             <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z"/>

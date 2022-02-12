@@ -10,6 +10,7 @@ function debug_to_console($data) {
 function registerLoggedUser($user){
     $_SESSION["id"] = $user["idUtente"];
     $_SESSION["tipo"] = $user["tipo"];
+    $_SESSION["user"] = $user;
 }
 
 function isUserLoggedIn(){
