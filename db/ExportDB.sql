@@ -1,5 +1,4 @@
-DROP database `my_crownsatelier`;
-CREATE DATABASE `my_crownsatelier` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE  IF NOT EXISTS `my_crownsatelier` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `my_crownsatelier`;
 -- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
 --
@@ -34,7 +33,7 @@ CREATE TABLE `carrelli` (
   KEY `fk_carrelli_cliente_idx` (`idCliente`),
   KEY `fk_carrelli_fornitore_idx` (`idFornitore`),
   KEY `fk_carrelli_idProdotto_idx` (`idProdotto`),
-  CONSTRAINT `fk_carrelli_cliente` FOREIGN KEY (`idCliente`) REFERENCES `clienti` (`idCliente`),
+  CONSTRAINT `fk_carrelli_cliente` FOREIGN KEY (`idCliente`) REFERENCES `utenti` (`idUtente`),
   CONSTRAINT `fk_carrelli_fornitore` FOREIGN KEY (`idFornitore`) REFERENCES `prodotti_forniti` (`idFornitore`),
   CONSTRAINT `fk_carrelli_idProdotto` FOREIGN KEY (`idProdotto`) REFERENCES `prodotti_forniti` (`idProdotto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
@@ -46,6 +45,7 @@ CREATE TABLE `carrelli` (
 
 LOCK TABLES `carrelli` WRITE;
 /*!40000 ALTER TABLE `carrelli` DISABLE KEYS */;
+INSERT INTO `carrelli` VALUES (1,1,1,1),(10,1,1,8),(10,3,1,1);
 /*!40000 ALTER TABLE `carrelli` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -73,36 +73,6 @@ LOCK TABLES `categorie` WRITE;
 /*!40000 ALTER TABLE `categorie` DISABLE KEYS */;
 INSERT INTO `categorie` VALUES (1,'Corone','Corone d’alloro relative ad ogni corso di laurea','tag/corona.png'),(2,'Vestiti','Travestimenti per rendere tutto più divertente','tag/vestito.jpeg'),(3,'Festoni','Addobbi per rendere la tua festa indimenticabile','tag/festoni.png'),(4,'Bouquet','Per dare un tocco delicato a questa giornata','tag/bouquet.jpeg');
 /*!40000 ALTER TABLE `categorie` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `fornitori`
---
-
-DROP TABLE IF EXISTS `utenti`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `utenti` (
-  `idUtente` int NOT NULL AUTO_INCREMENT,
-  `email` varchar(100) NOT NULL,
-  `password` varchar(512) NOT NULL,
-  `telefono` varchar(15) NOT NULL,
-  `nomeAzienda` varchar(75),
-  `indirizzo` varchar(150),
-  `nome` varchar(25),
-  `cognome` varchar(25),
-  `tipo` varchar(25) NOT NULL,
-  PRIMARY KEY (`idUtente`,`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `fornitori`
---
-
-LOCK TABLES `utenti` WRITE;
-/*!40000 ALTER TABLE `utenti` DISABLE KEYS */;
-/*!40000 ALTER TABLE `utenti` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -301,6 +271,37 @@ LOCK TABLES `ricezioni_fornitori` WRITE;
 /*!40000 ALTER TABLE `ricezioni_fornitori` DISABLE KEYS */;
 /*!40000 ALTER TABLE `ricezioni_fornitori` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `utenti`
+--
+
+DROP TABLE IF EXISTS `utenti`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `utenti` (
+  `idUtente` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(512) NOT NULL,
+  `telefono` varchar(15) NOT NULL,
+  `nomeAzienda` varchar(75) DEFAULT NULL,
+  `indirizzo` varchar(150) DEFAULT NULL,
+  `nome` varchar(25) DEFAULT NULL,
+  `cognome` varchar(25) DEFAULT NULL,
+  `tipo` varchar(25) NOT NULL,
+  PRIMARY KEY (`idUtente`,`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `utenti`
+--
+
+LOCK TABLES `utenti` WRITE;
+/*!40000 ALTER TABLE `utenti` DISABLE KEYS */;
+INSERT INTO `utenti` VALUES (1,'ciao@gmail.com','ciao','2423','Ciao s.r.l.s',NULL,NULL,NULL,'fornitore'),(2,'prova@gmail.com','ciao','235235','Stiamo fallendo s.n.c',NULL,NULL,NULL,'fornitore'),(8,'signettohotmail.it@gmail.com','$6$rounds=5000$usesomesillystri$ucGIpU91gD.char2IelSbVUZdRFRT3pCNwCNaF9Grv6kVDYgmwtQl0dZBOKADyxCSAAuou5Tg.vtQwfu555MC1','3487894282',NULL,NULL,'Lorenzo','Signoretti','cliente'),(9,'lory4846@hotmail.it','$6$rounds=5000$usesomesillystri$ucGIpU91gD.char2IelSbVUZdRFRT3pCNwCNaF9Grv6kVDYgmwtQl0dZBOKADyxCSAAuou5Tg.vtQwfu555MC1','3487894282','Lorenzo Signoretti','Via Bernale 8',NULL,NULL,'fornitore'),(10,'fornito@ciao.com','$6$rounds=5000$usesomesillystri$luTZDio9NfWXus.LG8h2Ib4CzkE7hXYj9.r1NtoXW35iwkjV/etQ.TouSNj3ogr8bPn2Hi1q5/9BJcmyekREq1','3487523',NULL,NULL,'Lorenzo','Signoretti','cliente');
+/*!40000 ALTER TABLE `utenti` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -311,4 +312,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-03 21:18:28
+-- Dump completed on 2022-07-12 21:53:34
