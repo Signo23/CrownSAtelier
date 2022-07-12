@@ -13,7 +13,8 @@
         <div class="col-12 col-md-3 mt-3 mt-md-0">
             <div class="border rounded p-4">
                 <h2>€ <?php echo $templateParams['prezzo']?> </h2>
-                <button class="btn btn-success btn-labeled" type="button" action="#"
+                <form method="POST" action= "#">
+                <button class="btn btn-success btn-labeled" type="submit" id="addToCart" name="addToCart"
                 <?php if(!isUserLoggedIn()){
                         echo 'disabled';
                     }?> >
@@ -25,6 +26,7 @@
                     </span>
                     Aggiungi al carrello
                 </button>
+                </form>
                 <hr class="bg-success border-2 border-top border-success"/>
                 <button class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample">Seleziona venditore</button>
             </div>

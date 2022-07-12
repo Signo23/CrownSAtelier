@@ -95,6 +95,34 @@ class DatabaseHelper{
         return $stmt->insert_id;
     }
 
+    public function addToCart($userPkid, $productPkid, $sellerPkid){
+        $query = "INSERT INTO carrelli (idCliente, idProdotto, idFornitore, qnt) VALUES (?,?,?,1)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('iii', $userPkid, $productPkid, $sellerPkid);
+        debug_to_console("Query da eseguire");
+        $stmt->execute();
+        return $stmt->insert_id;
+    }
+
+    public function getProductInCart(int $userPkid, int $productPkid, int $sellerPkid){
+        $query = "SELECT * FROM carrelli WHERE idCliente = ? AND idProdotto = ? AND idFornitore = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('iii', $userPkid, $productPkid, $sellerPkid);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function updateCart($userPkid, $productPkid, $sellerPkid, $qnt) {
+        $query = "UPDATE carrelli SET qnt = ? WHERE idCliente = ? AND idProdotto = ? AND idFornitore = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('iiii', $qnt, $userPkid, $productPkid, $sellerPkid);
+        debug_to_console("Query da eseguire");
+        $stmt->execute();
+        return $stmt->insert_id;
+    }
+
     /*public function getRandomPosts($n){
         $stmt = $this->db->prepare("SELECT idarticolo, titoloarticolo, imgarticolo FROM articolo ORDER BY RAND() LIMIT ?");
         $stmt->bind_param('i',$n);
