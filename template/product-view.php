@@ -13,7 +13,10 @@
         <div class="col-12 col-md-3 mt-3 mt-md-0">
             <div class="border rounded p-4">
                 <h2>€ <?php echo $templateParams['prezzo']?> </h2>
-                <button class="btn btn-success btn-labeled" type="button" action="#">
+                <button class="btn btn-success btn-labeled" type="button" action="#"
+                <?php if(!isUserLoggedIn()){
+                        echo 'disabled';
+                    }?> >
                     <span class="btn-label">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
                             <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z"/>
@@ -44,7 +47,9 @@
                         <h5 class="card-title"><?php echo $venditore['nomeAzienda']?></h5>
                         <p class="card-text"><small class="text-muted">€ <?php echo $venditore['prezzo']?></small></p>
                         <div class="d-flex justify-content-end align-items-center">
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Aggiungi al Carrello</button>
+                            <button type="button" <?php if(!isUserLoggedIn()){
+                        echo 'disabled';
+                    }?> class="btn btn-sm btn-outline-secondary">Aggiungi al Carrello</button>
                         </div>
                     </div>
                 </div>
