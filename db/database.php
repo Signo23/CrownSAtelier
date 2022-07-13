@@ -123,6 +123,15 @@ class DatabaseHelper{
         return $stmt->insert_id;
     }
 
+    public function numberOfItemInCart($userPkid) {
+        $query = "SELECT SUM(qnt) as sumQnt FROM carrelli WHERE idCliente = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $userPkid);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC)[0]['sumQnt'];
+    }
+
     /*public function getRandomPosts($n){
         $stmt = $this->db->prepare("SELECT idarticolo, titoloarticolo, imgarticolo FROM articolo ORDER BY RAND() LIMIT ?");
         $stmt->bind_param('i',$n);
