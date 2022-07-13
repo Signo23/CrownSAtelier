@@ -32,6 +32,17 @@ if(isset($_GET['id']) && isset($_GET['seller'])){
             $dbh-> addToCart($_SESSION["id"], $_GET['id'], $_GET['seller']);
         }
     }
+    if(array_key_exists('addToCartSeller', $_POST)){
+        $id_seller = rtrim($_POST['idSeller'], '/');
+        $cart = $dbh-> getProductInCart($_SESSION["id"], $_GET['id'], $id_seller);
+        if(count($cart)!=0){
+            debug_to_console("Da aggiungere un elemento");
+            $dbh-> updateCart($_SESSION["id"], $_GET['id'], $id_seller, $cart[0]['qnt'] + 1); 
+        } else {
+            debug_to_console("Nuovo elemento nel carrello");
+            $dbh-> addToCart($_SESSION["id"], $_GET['id'], $id_seller);
+        }
+    }
 }
 require 'template/base.php';
 ?>

@@ -49,9 +49,15 @@
                         <h5 class="card-title"><?php echo $venditore['nomeAzienda']?></h5>
                         <p class="card-text"><small class="text-muted">€ <?php echo $venditore['prezzo']?></small></p>
                         <div class="d-flex justify-content-end align-items-center">
-                            <button type="button" <?php if(!isUserLoggedIn()){
-                        echo 'disabled';
-                    }?> class="btn btn-sm btn-outline-secondary">Aggiungi al Carrello</button>
+                            <form method="POST" action= "#">
+                                <input class="d-none" type="text" name="idSeller" value=<?php echo $venditore['idUtente']?>/> 
+                                <button type="submit" id="addToCartSeller" name="addToCartSeller"
+                                    <?php if(!isUserLoggedIn()){
+                                    echo 'disabled';
+                                    }?> class="btn btn-sm btn-outline-secondary">
+                                    Aggiungi al Carrello
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
