@@ -132,6 +132,34 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC)[0]['sumQnt'];
     }
 
+    public function cartTotal($userPkid) {
+        $query = "SELECT SUM(prodotti_forniti.prezzo) AS totale
+        FROM carrelli 
+        LEFT JOIN prodotti_forniti 
+        ON carrelli.idFornitore = prodotti_forniti.idFornitore
+        AND carrelli.idProdotto = prodotti_forniti.idProdotto
+        WHERE carrelli.idCliente = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $userPkid);
+        $stmt->execute();
+        return $stmt->getResult()->fetch_all(MYSQL_ASSOC)[0]['totale'];
+    }
+
+    public function cartItems($userPkid) {
+        $query = "SELECT prodotti_forniti.prezzo, prodotti.nome, prodotti.descrizione, prodotti.imgURL
+        FROM carrelli
+        LEFT JOIN prodotti_forniti 
+        ON carrelli.idFornitore = prodotti_forniti.idFornitore
+        AND carrelli.idProdotto = prodotti_forniti.idProdotto
+        LEFT JOIN prodotti 
+        ON carrelli.idProdotto = prodotti.idProdotto
+        WHERE carrelli.idCliente = ?"
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $userPkid);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQL_ASSOC);
+    }
+
     /*public function getRandomPosts($n){
         $stmt = $this->db->prepare("SELECT idarticolo, titoloarticolo, imgarticolo FROM articolo ORDER BY RAND() LIMIT ?");
         $stmt->bind_param('i',$n);
