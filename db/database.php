@@ -128,8 +128,8 @@ class DatabaseHelper{
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $userPkid);
         $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC)[0]['sumQnt'];
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC)[0]['sumQnt'];
+        return $result == null ? 0 : $result;
     }
 
     public function cartTotal($userPkid) {
