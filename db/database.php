@@ -147,7 +147,7 @@ class DatabaseHelper{
     }
 
     public function cartItems($userPkid) {
-        $query = "SELECT prodotti_forniti.prezzo, prodotti.nome, prodotti.descrizione, prodotti.imgURL, carrelli.qnt 
+        $query = "SELECT * 
         FROM carrelli
         LEFT JOIN prodotti_forniti 
         ON carrelli.idFornitore = prodotti_forniti.idFornitore
@@ -162,6 +162,42 @@ class DatabaseHelper{
     }
 
     public function placeOrder($userPkid){
+        $nOrder = $this->newOrder($userPkid);
+        $items = $this->cartItems($userPkid);
+        foreach ($items as $item) {
+            if($item['qntFornita'] >= $item['qnt']){
+                $this->addItemToOrder($item, $nOrder);
+                $this->notifyAddItemInOrder($item); 
+            }
+        }
+        $this->clearCart($userPkid);
+    }
+
+    private function newOrder($userPkid) {
+        $query = "INSERT INTO ordini (dataRichiesta, stato, idCliente) 
+        VALUES (NOW(),'Ordine effettuato', ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $userPkid);
+        $stmt->execute();
+        return $stmt->insert_id;
+    }
+
+    private function addItemToOrder($item, $nOrder) {
+        $query = "INSERT INTO liste_prodotti_ordine (nOrdine, idProdotto, idFornitore, qnt)
+        VALUES (?, ? ,? ,? )";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('iiii',$nOrder, $item['idProdotto'] , $item['idFornitore'], $item['qnt']);
+        $stmt->execute();
+        return $stmt->insert_id;
+    }
+
+    private function clearCart($userPkid) {
+        $query = "DELETE FROM carrelli WHERE idCliente = ? ";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $userPkid);
+        $stmt->execute();
+        var_dump($stmt->error);
+        return true;
     }
 
     //############################################################################
@@ -171,8 +207,15 @@ class DatabaseHelper{
     //##                                                                        ##
     //############################################################################
     //############################################################################
-    public function notifyOrderShipped(){};
-    public function notifyAddItemInOrder(){};
-    public function numberOfNotication(){};
+    public function notifyOrderShipped(){}
+    public function notifyAddItemInOrder($item){
+        $query = "INSERT INTO ricezioni_fornitori (idFornitore, tipo, data) 
+        VALUES (?, 'ORDINE_RIC', NOW())";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $item['idFornitore']);
+        $stmt->execute();
+        return $stmt->insert_id;
+    }
+    public function numberOfNotication(){}
 }
 ?>
