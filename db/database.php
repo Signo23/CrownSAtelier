@@ -99,7 +99,6 @@ class DatabaseHelper{
         $query = "INSERT INTO carrelli (idCliente, idProdotto, idFornitore, qnt) VALUES (?,?,?,1)";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('iii', $userPkid, $productPkid, $sellerPkid);
-        debug_to_console("Query da eseguire");
         $stmt->execute();
         return $stmt->insert_id;
     }
@@ -118,7 +117,6 @@ class DatabaseHelper{
         $query = "UPDATE carrelli SET qnt = ? WHERE idCliente = ? AND idProdotto = ? AND idFornitore = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('iiii', $qnt, $userPkid, $productPkid, $sellerPkid);
-        debug_to_console("Query da eseguire");
         $stmt->execute();
         return $stmt->insert_id;
     }

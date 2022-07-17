@@ -10,7 +10,6 @@ if (isUserLoggedIn()){
         debug_to_console($item['qnt']);
         debug_to_console($item);
     }
-    $dbh->placeOrder($_SESSION["id"]);
 }
 
 ?>
