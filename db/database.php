@@ -142,22 +142,22 @@ class DatabaseHelper{
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $userPkid);
         $stmt->execute();
-        return $stmt->getResult()->fetch_all(MYSQL_ASSOC)[0]['totale'];
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC)[0]['totale'];
     }
 
     public function cartItems($userPkid) {
-        $query = "SELECT prodotti_forniti.prezzo, prodotti.nome, prodotti.descrizione, prodotti.imgURL
+        $query = "SELECT prodotti_forniti.prezzo, prodotti.nome, prodotti.descrizione, prodotti.imgURL, carrelli.qnt 
         FROM carrelli
         LEFT JOIN prodotti_forniti 
         ON carrelli.idFornitore = prodotti_forniti.idFornitore
         AND carrelli.idProdotto = prodotti_forniti.idProdotto
         LEFT JOIN prodotti 
         ON carrelli.idProdotto = prodotti.idProdotto
-        WHERE carrelli.idCliente = ?"
+        WHERE carrelli.idCliente = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $userPkid);
         $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQL_ASSOC);
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
     /*public function getRandomPosts($n){

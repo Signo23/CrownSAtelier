@@ -1,9 +1,12 @@
 <?php
 require_once 'start.php';
 
-if userLoggedIn(){
-    echo $dbh->cartTotal($_SESSION["id"]);
-    echo $dbh->cartItems($_SESSION["id"]);    
+if (isUserLoggedIn()){
+    debug_to_console($dbh->cartTotal($_SESSION["id"]));
+    $items = $dbh->cartItems($_SESSION["id"]);
+    foreach ($items as $item) {
+        debug_to_console($item);
+    }
 }
 
 ?>
