@@ -142,7 +142,8 @@ class DatabaseHelper{
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $userPkid);
         $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC)[0]['totale'];
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC)[0]['totale'];
+        return round($result, 2, PHP_ROUND_HALF_DOWN);
     }
 
     public function cartItems($userPkid) {
