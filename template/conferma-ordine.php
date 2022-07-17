@@ -28,7 +28,7 @@
         </ul>
       </div>
 
-      <div class="col-md-7 col-lg-8">
+      <div class="col-md-7">
         <h4 class="mb-3">Informazioni ordine</h4>
         <form class="needs-validation" novalidate method="POST" action= "#">
           <div class="row g-3">

@@ -131,7 +131,7 @@ class DatabaseHelper{
     }
 
     public function cartTotal($userPkid) {
-        $query = "SELECT SUM(prodotti_forniti.prezzo) AS totale
+        $query = "SELECT carrelli.qnt, prodotti_forniti.prezzo
         FROM carrelli 
         LEFT JOIN prodotti_forniti 
         ON carrelli.idFornitore = prodotti_forniti.idFornitore
@@ -140,8 +140,12 @@ class DatabaseHelper{
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $userPkid);
         $stmt->execute();
-        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC)[0]['totale'];
-        return round($result, 2, PHP_ROUND_HALF_DOWN);
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $sum = 0;
+        foreach ($result as $res) {
+            $sum += ($res['qnt'] * $res['prezzo']);
+        }
+        return round($sum, 2, PHP_ROUND_HALF_DOWN);
     }
 
     public function cartItems($userPkid) {
