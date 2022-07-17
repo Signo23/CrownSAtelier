@@ -19,8 +19,10 @@
                             <small class="text-muted">€ <?php echo $prodotto['prezzo'];?></small>
                             <p class="card-text">Quantità: <?php echo $prodotto['qnt'];?></p>
                             <div class="d-flex justify-content-end align-items-center">
-                                <form>
-                                    <a href="./order-confirm.php" class="btn btn-outline-danger">Rimuovi</a>
+                                <form method="POST" action="#">
+                                    <input class="d-none" type="text" name="idSeller" value=<?php echo $prodotto['idFornitore']?>/> 
+                                    <input class="d-none" type="text" name="idItem" value=<?php echo $prodotto['idProdotto']?>/> 
+                                    <button type="submit" name="remove" class="btn btn-outline-danger">Rimuovi</button>
                                 </form>
                             </div>
                         </div>
@@ -30,12 +32,20 @@
 
             
         <?php endforeach;?>
+        <?php if(count($templateParams["prodotti"])!= 0 ):?>
         <div class="d-grid gap-2 d-sm-flex justify-content-end">
             <strong>Totale: € <?php echo $templateParams['cartTotal']?></strong>
         </div>
         <div class="d-grid gap-2 d-sm-flex justify-content-end">
             <a href="./order-confirm.php" class="btn btn-outline-success">Procedi all'acquisto</a>
         </div>
+        <?php else :?>
+            <div class="d-flex justify-content-center">
+            <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<lottie-player src="https://assets8.lottiefiles.com/packages/lf20_ry4iluja.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player>
+            </div>
+            
+        <?php endif;?>
       
     </div>
 </div>

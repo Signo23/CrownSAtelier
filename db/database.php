@@ -202,6 +202,21 @@ class DatabaseHelper{
         return true;
     }
 
+    public function removeFromCart($userPkid, $sellerPkid, $productPkid){
+        debug_to_console($userPkid);
+        debug_to_console($sellerPkid);
+        debug_to_console($productPkid);
+        $query = "DELETE FROM carrelli 
+        WHERE idCliente = ? 
+        AND idFornitore = ? 
+        AND idProdotto = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('iii', $userPkid, $sellerPkid, $productPkid);
+        $stmt->execute();
+        var_dump($stmt->error);
+        return true;
+    }
+
     //############################################################################
     //############################################################################
     //##                                                                        ##
