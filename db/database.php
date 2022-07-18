@@ -247,6 +247,22 @@ class DatabaseHelper{
         $stmt->execute();
         return $stmt->insert_id;
     }
+    public function notificationForSeller($pkid, $number){
+        $query = "SELECT *
+        FROM ricezioni_fornitori 
+        LEFT JOIN notifiche ON ricezioni_fornitore.tipo = notifiche.tipo
+        WHERE ricezioni_fornitore.idFornitore = ?";
+        if($number > 0) {
+            $query." LIMIT ?";
+            $stmt = $this->db->prepare($query);
+            $stmt->bind_param('ii', $pkid, $number);
+        } else {
+            $stmt = $this->db->prepare($query);
+            $stmt->bind_param('i', $pkid);
+        }
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
     public function numberOfNotication(){}
 }
 ?>
