@@ -19,6 +19,10 @@ if(isset($_GET["search"])){
 if(isset($_GET["id"])){
     $templateParams["prodotti"] = $dbh-> getProductByCategory($_GET["id"]);
 }
+if(isset($_GET["word"])){
+    $templateParams["search"] = $_GET["word"];
+    $templateParams["prodotti"] = $dbh->search($_GET["word"]);
+}
 
 require 'template/base.php';
 ?>

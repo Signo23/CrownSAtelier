@@ -217,6 +217,20 @@ class DatabaseHelper{
         return true;
     }
 
+    public function search($search) {
+        $query = "SELECT * 
+        FROM prodotti, prodotti_forniti 
+        WHERE prodotti.idProdotto = prodotti_forniti.idProdotto 
+        AND prodotti_forniti.prezzo IN ( SELECT min(p.prezzo) 
+                                            FROM prodotti_forniti p 
+                                            GROUP BY p.idProdotto )
+        AND ((prodotti.nome LIKE '%".$search."%')
+        OR (prodotti.descrizione LIKE '%".$search."%'))";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
     //############################################################################
     //############################################################################
     //##                                                                        ##
