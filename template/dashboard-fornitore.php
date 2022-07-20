@@ -22,7 +22,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="dashboard.php?id=user">
                         <span data-feather="users"></span>
                         Impostazioni utente
                         </a>
@@ -38,7 +38,7 @@
             </div>
         </nav>
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-            <?php echo $templateParams["page"]; ?>
+            <?php require $templateParams["page"]; ?>
         </main>
     </div>
 </div>

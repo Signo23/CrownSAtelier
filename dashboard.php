@@ -8,6 +8,10 @@ $templateParams["navClass"] = "sticky-top";
 $templateParams["nome"] = "dashboard-fornitore.php";
 $templateParmas["css"] = "dashboard.css";
 
+if(isset($_GET['id'])){
+    $templateParams["page"] = './template/dashboard/dashboard-'.$_GET['id'].'.php';
+}
+
 
 //Categorie Template
 require 'template/base.php';
