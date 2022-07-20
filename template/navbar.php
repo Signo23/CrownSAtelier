@@ -23,9 +23,9 @@
                             Notifiche
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <li><a class="dropdown-item" href="#">Notifica(1)</a></li>
+                            <li><a class="dropdown-item" href="#">Notifica(2)</a></li>
+                            <li><a class="dropdown-item" href="dashboard.php?id=notification">Visualizza tutte le notifiche</a></li>
                         </ul>
                     </div>
                 </li>
