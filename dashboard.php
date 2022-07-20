@@ -5,7 +5,7 @@ require_once 'start.php';
 $templateParams["titolo"] = "Crown's Atelier";
 $templateParams["nav"] = "navbar.php";
 $templateParams["navClass"] = "sticky-top";
-$templateParams["nome"] = "dashboard-fornitore.php";
+$templateParams["nome"] = "dashboard.php";
 $templateParmas["css"] = "dashboard.css";
 
 if(isset($_GET['id'])){
@@ -14,5 +14,6 @@ if(isset($_GET['id'])){
 
 
 //Categorie Template
+$templateParams["dashboardNav"] = './template/dashboard/dashboard-'.$_SESSION["tipo"].'-nav.php';
 require 'template/base.php';
 ?>
