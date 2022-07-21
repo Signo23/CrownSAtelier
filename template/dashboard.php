@@ -8,7 +8,7 @@
 
                 <div class="navbar-nav mt-5">
                     <div class="nav-item text-nowrap">
-                    <a class="nav-link px-3 btn btn-danger text-white" href="utils/logout.php">Log out</a>
+                      <a class="nav-link px-3 btn btn-danger text-white" href="utils/logout.php">Log out</a>
                     </div>
                 </div>
         
