@@ -238,7 +238,14 @@ class DatabaseHelper{
     //##                                                                        ##
     //############################################################################
     //############################################################################
-    public function notifyOrderShipped(){}
+    public function notifyOrderShipped($pkidUser){
+        $query = "INSERT INTO ricezioni_cliente (idCliente, tipo, data) 
+        VALUES (?, 'ORDINE_SPE', NOW())";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $pkidUser);
+        $stmt->execute();
+        return $stmt->insert_id;
+    }
     public function notifyAddItemInOrder($item){
         $query = "INSERT INTO ricezioni_fornitori (idFornitore, tipo, data) 
         VALUES (?, 'ORDINE_RIC', NOW())";
@@ -263,6 +270,35 @@ class DatabaseHelper{
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
+    public function notificationForUser($pkid, $number){
+        $query = "SELECT *
+        FROM ricezioni_cliente 
+        LEFT JOIN notifiche ON ricezioni_cliente.tipo = notifiche.tipo
+        WHERE ricezioni_cliente.idCliente = ?";
+        if($number > 0) {
+            $query." LIMIT ?";
+            $stmt = $this->db->prepare($query);
+            $stmt->bind_param('ii', $pkid, $number);
+        } else {
+            $stmt = $this->db->prepare($query);
+            $stmt->bind_param('i', $pkid);
+        }
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function numberOfNotication(){}
+
+    //############################################################################
+    //############################################################################
+    //##                                                                        ##
+    //##                         ITEM MANIPULATION                              ##
+    //##                                                                        ##
+    //############################################################################
+    //############################################################################
+    
+    public function addItemForSeller($pkidSeller, $pkidProduct, $price, $qnt){}
+    public function refillItemForSeller($pkidSeller, $pkidProduct, $qnt){}
+    public function addNewProduct(){}
 }
 ?>
