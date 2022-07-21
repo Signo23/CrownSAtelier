@@ -24,7 +24,7 @@
             ?>
         
         <footer class="mt-auto text-center text-lg-start bg-light text-muted">
-            <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+            <div class="text-center p-4">
                 Crown's Atelier, 2022
             </div>
         </footer>
