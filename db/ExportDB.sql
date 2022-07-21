@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `my_crownsatelier` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `my_crownsatelier`;
--- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.28, for macos11 (x86_64)
 --
--- Host: 127.0.0.1    Database: my_crownsatelier
+-- Host: localhost    Database: my_crownsatelier
 -- ------------------------------------------------------
--- Server version	8.0.27
+-- Server version	8.0.28
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -45,7 +45,7 @@ CREATE TABLE `carrelli` (
 
 LOCK TABLES `carrelli` WRITE;
 /*!40000 ALTER TABLE `carrelli` DISABLE KEYS */;
-INSERT INTO `carrelli` VALUES (1,1,1,1),(10,1,1,8),(10,3,1,1);
+INSERT INTO `carrelli` VALUES (1,1,1,1),(10,3,1,1);
 /*!40000 ALTER TABLE `carrelli` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -103,6 +103,7 @@ CREATE TABLE `liste_prodotti_ordine` (
 
 LOCK TABLES `liste_prodotti_ordine` WRITE;
 /*!40000 ALTER TABLE `liste_prodotti_ordine` DISABLE KEYS */;
+INSERT INTO `liste_prodotti_ordine` VALUES (18,1,1,1),(18,6,1,1),(19,1,1,1),(19,6,1,1),(20,1,1,2),(20,3,1,2),(21,1,1,2),(21,3,1,2),(25,1,1,2),(26,1,1,2),(27,1,1,2),(28,1,1,1),(29,1,1,1),(30,1,1,1),(31,1,1,1),(32,1,1,1),(33,1,1,1),(34,1,1,1),(35,1,1,1),(36,1,1,1),(37,1,1,1),(38,1,1,1),(39,1,1,1),(39,2,1,2),(39,2,2,1),(40,1,1,1),(45,1,1,1),(50,2,1,3),(51,1,1,1),(52,1,1,1),(52,1,2,1),(53,8,1,1);
 /*!40000 ALTER TABLE `liste_prodotti_ordine` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -126,6 +127,7 @@ CREATE TABLE `notifiche` (
 
 LOCK TABLES `notifiche` WRITE;
 /*!40000 ALTER TABLE `notifiche` DISABLE KEYS */;
+INSERT INTO `notifiche` VALUES ('ORDINE_RIC','Un prodotto è stato aggiunto in un ordine'),('ORDINE_SPE','Un prodotto da te ordinato è stato appena spedito');
 /*!40000 ALTER TABLE `notifiche` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -138,14 +140,14 @@ DROP TABLE IF EXISTS `ordini`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ordini` (
   `nOrdine` int NOT NULL AUTO_INCREMENT,
-  `dataRichiesta` date NOT NULL,
+  `dataRichiesta` datetime NOT NULL,
   `stato` varchar(512) NOT NULL,
-  `dataEffettuazione` date DEFAULT NULL,
+  `dataEffettuazione` datetime DEFAULT NULL,
   `idCliente` int NOT NULL,
   PRIMARY KEY (`nOrdine`),
   KEY `fk_ordini_email_idx` (`idCliente`),
-  CONSTRAINT `fk_ordini_email` FOREIGN KEY (`idCliente`) REFERENCES `utente` (`idUtente`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+  CONSTRAINT `fk_ordini_email` FOREIGN KEY (`idCliente`) REFERENCES `utenti` (`idUtente`)
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -154,6 +156,7 @@ CREATE TABLE `ordini` (
 
 LOCK TABLES `ordini` WRITE;
 /*!40000 ALTER TABLE `ordini` DISABLE KEYS */;
+INSERT INTO `ordini` VALUES (15,'2022-07-17 14:40:10','Ordine effettuato',NULL,11),(16,'2022-07-17 14:46:27','Ordine effettuato',NULL,11),(17,'2022-07-17 14:47:46','Ordine effettuato',NULL,11),(18,'2022-07-17 14:52:56','Ordine effettuato',NULL,11),(19,'2022-07-17 14:56:00','Ordine effettuato',NULL,11),(20,'2022-07-17 14:59:54','Ordine effettuato',NULL,11),(21,'2022-07-17 15:03:40','Ordine effettuato',NULL,11),(22,'2022-07-17 15:05:17','Ordine effettuato',NULL,11),(23,'2022-07-17 15:05:27','Ordine effettuato',NULL,11),(24,'2022-07-17 15:14:53','Ordine effettuato',NULL,11),(25,'2022-07-17 15:15:03','Ordine effettuato',NULL,11),(26,'2022-07-17 15:15:40','Ordine effettuato',NULL,11),(27,'2022-07-17 15:16:58','Ordine effettuato',NULL,11),(28,'2022-07-17 16:00:22','Ordine effettuato',NULL,11),(29,'2022-07-17 16:07:59','Ordine effettuato',NULL,11),(30,'2022-07-17 16:08:24','Ordine effettuato',NULL,11),(31,'2022-07-17 16:09:11','Ordine effettuato',NULL,11),(32,'2022-07-17 16:10:05','Ordine effettuato',NULL,11),(33,'2022-07-17 16:10:23','Ordine effettuato',NULL,11),(34,'2022-07-17 16:12:07','Ordine effettuato',NULL,11),(35,'2022-07-17 16:13:44','Ordine effettuato',NULL,11),(36,'2022-07-17 16:15:00','Ordine effettuato',NULL,11),(37,'2022-07-17 16:15:19','Ordine effettuato',NULL,11),(38,'2022-07-17 16:16:51','Ordine effettuato',NULL,11),(39,'2022-07-17 16:20:38','Ordine effettuato',NULL,11),(40,'2022-07-17 16:22:25','Ordine effettuato',NULL,11),(41,'2022-07-17 16:23:14','Ordine effettuato',NULL,11),(42,'2022-07-17 17:14:35','Ordine effettuato',NULL,11),(43,'2022-07-17 17:16:09','Ordine effettuato',NULL,11),(44,'2022-07-17 17:17:09','Ordine effettuato',NULL,11),(45,'2022-07-17 17:17:46','Ordine effettuato',NULL,11),(46,'2022-07-17 17:18:40','Ordine effettuato',NULL,11),(47,'2022-07-17 17:25:37','Ordine effettuato',NULL,11),(48,'2022-07-17 17:26:57','Ordine effettuato',NULL,11),(49,'2022-07-17 17:27:18','Ordine effettuato',NULL,11),(50,'2022-07-17 18:48:08','Ordine effettuato',NULL,11),(51,'2022-07-17 18:55:23','Ordine effettuato',NULL,11),(52,'2022-07-17 21:39:11','Ordine effettuato',NULL,11),(53,'2022-07-21 18:55:27','Ordine effettuato',NULL,11);
 /*!40000 ALTER TABLE `ordini` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -224,13 +227,14 @@ DROP TABLE IF EXISTS `ricezioni_cliente`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ricezioni_cliente` (
-  `idCLiente` int NOT NULL,
+  `idCliente` int NOT NULL,
   `tipo` varchar(10) NOT NULL,
   `data` date NOT NULL,
-  PRIMARY KEY (`idCLiente`,`tipo`),
-  KEY `fk_ricezioni_cliente_email_idx` (`idCLiente`),
+  `idNotificaCliente` int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`idNotificaCliente`),
+  KEY `fk_ricezioni_cliente_email_idx` (`idCliente`),
   KEY `fk_ricezioni_cliente_tipo_idx` (`tipo`),
-  CONSTRAINT `fk_ricezioni_cliente_email` FOREIGN KEY (`idCLiente`) REFERENCES `utenti` (`idUtente`),
+  CONSTRAINT `fk_ricezioni_cliente_email` FOREIGN KEY (`idCliente`) REFERENCES `utenti` (`idUtente`),
   CONSTRAINT `fk_ricezioni_cliente_tipo` FOREIGN KEY (`tipo`) REFERENCES `notifiche` (`tipo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -254,13 +258,14 @@ DROP TABLE IF EXISTS `ricezioni_fornitori`;
 CREATE TABLE `ricezioni_fornitori` (
   `idFornitore` int NOT NULL,
   `tipo` varchar(10) NOT NULL,
-  `data` date NOT NULL,
-  PRIMARY KEY (`idFornitore`,`tipo`),
+  `data` datetime NOT NULL,
+  `idNotificaFornitore` int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`idNotificaFornitore`),
   KEY `fk_ricezioni_fornitori_email_idx` (`idFornitore`),
   KEY `fk_ricezioni_fornitori_tipo_idx` (`tipo`),
   CONSTRAINT `fk_ricezioni_fornitori_email` FOREIGN KEY (`idFornitore`) REFERENCES `utenti` (`idUtente`),
   CONSTRAINT `fk_ricezioni_fornitori_tipo` FOREIGN KEY (`tipo`) REFERENCES `notifiche` (`tipo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -269,6 +274,7 @@ CREATE TABLE `ricezioni_fornitori` (
 
 LOCK TABLES `ricezioni_fornitori` WRITE;
 /*!40000 ALTER TABLE `ricezioni_fornitori` DISABLE KEYS */;
+INSERT INTO `ricezioni_fornitori` VALUES (1,'ORDINE_RIC','2022-07-17 16:20:38',1),(1,'ORDINE_RIC','2022-07-17 16:20:38',2),(2,'ORDINE_RIC','2022-07-17 16:20:38',3),(1,'ORDINE_RIC','2022-07-17 16:22:25',4),(1,'ORDINE_RIC','2022-07-17 17:17:46',5),(1,'ORDINE_RIC','2022-07-17 18:48:08',6),(1,'ORDINE_RIC','2022-07-17 18:55:23',7),(1,'ORDINE_RIC','2022-07-17 21:39:11',8),(2,'ORDINE_RIC','2022-07-17 21:39:11',9),(1,'ORDINE_RIC','2022-07-21 18:55:27',10);
 /*!40000 ALTER TABLE `ricezioni_fornitori` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -290,7 +296,7 @@ CREATE TABLE `utenti` (
   `cognome` varchar(25) DEFAULT NULL,
   `tipo` varchar(25) NOT NULL,
   PRIMARY KEY (`idUtente`,`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -299,7 +305,7 @@ CREATE TABLE `utenti` (
 
 LOCK TABLES `utenti` WRITE;
 /*!40000 ALTER TABLE `utenti` DISABLE KEYS */;
-INSERT INTO `utenti` VALUES (1,'ciao@gmail.com','ciao','2423','Ciao s.r.l.s',NULL,NULL,NULL,'fornitore'),(2,'prova@gmail.com','ciao','235235','Stiamo fallendo s.n.c',NULL,NULL,NULL,'fornitore'),(8,'signettohotmail.it@gmail.com','$6$rounds=5000$usesomesillystri$ucGIpU91gD.char2IelSbVUZdRFRT3pCNwCNaF9Grv6kVDYgmwtQl0dZBOKADyxCSAAuou5Tg.vtQwfu555MC1','3487894282',NULL,NULL,'Lorenzo','Signoretti','cliente'),(9,'lory4846@hotmail.it','$6$rounds=5000$usesomesillystri$ucGIpU91gD.char2IelSbVUZdRFRT3pCNwCNaF9Grv6kVDYgmwtQl0dZBOKADyxCSAAuou5Tg.vtQwfu555MC1','3487894282','Lorenzo Signoretti','Via Bernale 8',NULL,NULL,'fornitore'),(10,'fornito@ciao.com','$6$rounds=5000$usesomesillystri$luTZDio9NfWXus.LG8h2Ib4CzkE7hXYj9.r1NtoXW35iwkjV/etQ.TouSNj3ogr8bPn2Hi1q5/9BJcmyekREq1','3487523',NULL,NULL,'Lorenzo','Signoretti','cliente');
+INSERT INTO `utenti` VALUES (1,'ciao@gmail.com','ciao','2423','Ciao s.r.l.s',NULL,NULL,NULL,'fornitore'),(2,'prova@gmail.com','ciao','235235','Stiamo fallendo s.n.c',NULL,NULL,NULL,'fornitore'),(8,'signettohotmail.it@gmail.com','$6$rounds=5000$usesomesillystri$ucGIpU91gD.char2IelSbVUZdRFRT3pCNwCNaF9Grv6kVDYgmwtQl0dZBOKADyxCSAAuou5Tg.vtQwfu555MC1','3487894282',NULL,NULL,'Lorenzo','Signoretti','cliente'),(9,'lory4846@hotmail.it','$6$rounds=5000$usesomesillystri$ucGIpU91gD.char2IelSbVUZdRFRT3pCNwCNaF9Grv6kVDYgmwtQl0dZBOKADyxCSAAuou5Tg.vtQwfu555MC1','3487894282','Lorenzo Signoretti','Via Bernale 8',NULL,NULL,'fornitore'),(10,'fornito@ciao.com','$6$rounds=5000$usesomesillystri$luTZDio9NfWXus.LG8h2Ib4CzkE7hXYj9.r1NtoXW35iwkjV/etQ.TouSNj3ogr8bPn2Hi1q5/9BJcmyekREq1','3487523',NULL,NULL,'Lorenzo','Signoretti','cliente'),(11,'cliente@mail.it','$6$rounds=5000$usesomesillystri$luTZDio9NfWXus.LG8h2Ib4CzkE7hXYj9.r1NtoXW35iwkjV/etQ.TouSNj3ogr8bPn2Hi1q5/9BJcmyekREq1','3487894282',NULL,NULL,'Lorenzo','Signoretti','cliente');
 /*!40000 ALTER TABLE `utenti` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -312,4 +318,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-12 21:53:34
+-- Dump completed on 2022-07-21 18:56:41
