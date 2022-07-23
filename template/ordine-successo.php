@@ -4,7 +4,6 @@
     <div class="col-lg-6 mx-auto">
         <p class="lead mb-4">Riceverai il tuo ordine presso il Campus di Cesena.</p>
         <div class="d-flex justify-content-center">
-        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
         <lottie-player src="https://assets7.lottiefiles.com/temp/lf20_fxHtqF.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player>
         </div>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">

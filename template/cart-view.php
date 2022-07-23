@@ -41,8 +41,7 @@
         </div>
         <?php else :?>
             <div class="d-flex justify-content-center">
-            <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-<lottie-player src="https://assets8.lottiefiles.com/packages/lf20_ry4iluja.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player>
+            <lottie-player src="https://assets8.lottiefiles.com/packages/lf20_ry4iluja.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player>
             </div>
             
         <?php endif;?>
