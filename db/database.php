@@ -24,7 +24,8 @@ class DatabaseHelper{
         AND prodotti.categoria = ?
         AND prodotti_forniti.prezzo IN ( SELECT min(p.prezzo) 
                                             FROM prodotti_forniti p 
-                                            GROUP BY p.idProdotto )";
+                                            GROUP BY p.idProdotto )
+        AND prodotti_forniti.qntFornita > 0";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i',$idcategory);
         $stmt->execute();
@@ -52,7 +53,8 @@ class DatabaseHelper{
         FROM utenti, prodotti_forniti 
         WHERE utenti.idUtente = prodotti_forniti.idFornitore 
         AND prodotti_forniti.idProdotto = ?
-        AND utenti.tipo = 'fornitore' 
+        AND utenti.tipo = 'fornitore'
+        AND prodotti_forniti.qntFornita > 0 
         ORDER BY prodotti_forniti.prezzo";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i',$id);
