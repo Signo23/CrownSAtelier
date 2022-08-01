@@ -259,8 +259,8 @@ class DatabaseHelper{
     public function notificationForSeller($pkid, $number){
         $query = "SELECT *
         FROM ricezioni_fornitori 
-        LEFT JOIN notifiche ON ricezioni_fornitore.tipo = notifiche.tipo
-        WHERE ricezioni_fornitore.idFornitore = ?";
+        LEFT JOIN notifiche ON ricezioni_fornitori.tipo = notifiche.tipo
+        WHERE ricezioni_fornitori.idFornitore = ?";
         if($number > 0) {
             $query." LIMIT ?";
             $stmt = $this->db->prepare($query);
