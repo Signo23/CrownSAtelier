@@ -15,8 +15,8 @@ if(isset($_GET['id'])){
         } else {
             $templateParams['notication'] = $dbh->notificationForSeller($_SESSION['id'], -1);
         }
-    } else if ($_GET['id'] == "user-oder") {
-        
+    } else if ($_GET['id'] == "user-order") {
+        $templateParams['orders'] = $dbh->orderForUser($_SESSION['id']);
     }
 }
 $templateParams["dashboardNav"] = './template/dashboard/dashboard-'.$_SESSION["tipo"].'-nav.php';

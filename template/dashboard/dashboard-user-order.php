@@ -5,12 +5,15 @@
     </div>
 <?php else: ?>
     <?php foreach($templateParams['orders'] as $order): ?>
-        <div class="card">
+        <div class="card m-2">
             <div class="card-header">
+                Ordine: #<?php echo $order['nOrdine'];?>
             </div>
             <div class="card-body">
-                <h5 class="card-title"><?php echo $order['descrizione'];?></h5>
-                <p class="card-text"><?php echo $order['data'];?></p>
+                <h5 class="card-title"><?php echo $order['nome'];?></h5>
+                <p class="card-text">
+                    Data consegna prevista: <?php echo $order['dataRichiesta'];?>
+                </p>
             </div>
         </div>
     <?php endforeach;?>

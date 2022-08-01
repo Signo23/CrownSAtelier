@@ -289,8 +289,6 @@ class DatabaseHelper{
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function numberOfNotication(){}
-
     //############################################################################
     //############################################################################
     //##                                                                        ##
@@ -302,5 +300,28 @@ class DatabaseHelper{
     public function addItemForSeller($pkidSeller, $pkidProduct, $price, $qnt){}
     public function refillItemForSeller($pkidSeller, $pkidProduct, $qnt){}
     public function addNewProduct(){}
+
+    //############################################################################
+    //############################################################################
+    //##                                                                        ##
+    //##                                ORDERS                                  ##
+    //##                                                                        ##
+    //############################################################################
+    //############################################################################
+
+    public function orderForUser($pkid) {
+        $query="SELECT * 
+        FROM ordini
+        LEFT JOIN liste_prodotti_ordine
+        ON liste_prodotti_ordine.nOrdine = ordini.nOrdine
+        LEFT JOIN prodotti
+        ON prodotti.idProdotto = liste_prodotti_ordine.idProdotto
+        WHERE ordini.idCliente = ?
+        AND liste_prodotti_ordine.nOrdine IS NOT NULL";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $pkid);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
 }
 ?>
