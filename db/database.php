@@ -165,45 +165,6 @@ class DatabaseHelper{
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function placeOrder($userPkid){
-        $nOrder = $this->newOrder($userPkid);
-        $items = $this->cartItems($userPkid);
-        foreach ($items as $item) {
-            if($item['qntFornita'] >= $item['qnt']){
-                $this->addItemToOrder($item, $nOrder);
-                $this->notifyAddItemInOrder($item); 
-            }
-        }
-        $this->clearCart($userPkid);
-    }
-
-    private function newOrder($userPkid) {
-        $query = "INSERT INTO ordini (dataRichiesta, stato, idCliente) 
-        VALUES (NOW(),'Ordine effettuato', ?)";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param('i', $userPkid);
-        $stmt->execute();
-        return $stmt->insert_id;
-    }
-
-    private function addItemToOrder($item, $nOrder) {
-        $query = "INSERT INTO liste_prodotti_ordine (nOrdine, idProdotto, idFornitore, qnt)
-        VALUES (?, ? ,? ,? )";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param('iiii',$nOrder, $item['idProdotto'] , $item['idFornitore'], $item['qnt']);
-        $stmt->execute();
-        return $stmt->insert_id;
-    }
-
-    private function clearCart($userPkid) {
-        $query = "DELETE FROM carrelli WHERE idCliente = ? ";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param('i', $userPkid);
-        $stmt->execute();
-        var_dump($stmt->error);
-        return true;
-    }
-
     public function removeFromCart($userPkid, $sellerPkid, $productPkid){
         debug_to_console($userPkid);
         debug_to_console($sellerPkid);
@@ -289,6 +250,15 @@ class DatabaseHelper{
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function notifyNoItem($pkisSeller){
+        $query = "INSERT INTO ricezioni_fornitori (idFornitore, tipo, data) 
+        VALUES (?, 'OUT_OF_ST', NOW())";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $pkisSeller);
+        $stmt->execute();
+        return $stmt->insert_id;
+    }
+
     //############################################################################
     //############################################################################
     //##                                                                        ##
@@ -315,6 +285,34 @@ class DatabaseHelper{
         return $stmt->insert_id;
     }
     public function addNewProduct(){}
+    public function removeItemForSeller(){}
+
+    public function reduceQntItemSeller($pkidSeller, $pkidItem) {
+        $query = "UPDATE prodotti_forniti 
+        SET qntFornita = qntFornita - 1 
+        WHERE idFornitore = ? 
+        AND idProdotto = ?
+        AND qntFornita != 0";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('ii', $pkidSeller, $pkidItem);
+        $stmt->execute();
+        return $stmt->insert_id;
+    }
+
+    public function checkNotifyOutOfStockItem($pkidSeller, $pkidItem){
+        $query = "SELECT *
+        FROM prodotti_forniti
+        WHERE idFornitore = ?
+        AND idProdotto = ?
+        AND qntFornita = 0";
+        $stmt = $this->db->prepare(($query));
+        $stmt->bind_param('ii', $pkidSeller, $pkidItem);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        if(count($result) != 0 ){
+            $this->notifyNoItem($pkidSeller);
+        }
+    }
 
     //############################################################################
     //############################################################################
@@ -352,6 +350,47 @@ class DatabaseHelper{
         $stmt->bind_param('i', $pkid);
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function placeOrder($userPkid){
+        $nOrder = $this->newOrder($userPkid);
+        $items = $this->cartItems($userPkid);
+        foreach ($items as $item) {
+            if($item['qntFornita'] >= $item['qnt']){
+                $this->addItemToOrder($item, $nOrder);
+                $this->notifyAddItemInOrder($item); 
+                $this->reduceQntItemSeller($item['idFornitore'], $item['idProdotto']);
+                $this->checkNotifyOutOfStockItem($item['idFornitore'], $item['idProdotto']);
+            }
+        }
+        $this->clearCart($userPkid);
+    }
+
+    private function newOrder($userPkid) {
+        $query = "INSERT INTO ordini (dataRichiesta, stato, idCliente) 
+        VALUES (NOW(),'Ordine effettuato', ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $userPkid);
+        $stmt->execute();
+        return $stmt->insert_id;
+    }
+
+    private function addItemToOrder($item, $nOrder) {
+        $query = "INSERT INTO liste_prodotti_ordine (nOrdine, idProdotto, idFornitore, qnt)
+        VALUES (?, ? ,? ,? )";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('iiii',$nOrder, $item['idProdotto'] , $item['idFornitore'], $item['qnt']);
+        $stmt->execute();
+        return $stmt->insert_id;
+    }
+
+    private function clearCart($userPkid) {
+        $query = "DELETE FROM carrelli WHERE idCliente = ? ";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $userPkid);
+        $stmt->execute();
+        var_dump($stmt->error);
+        return true;
     }
 }
 ?>
