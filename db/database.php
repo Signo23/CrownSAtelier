@@ -297,8 +297,23 @@ class DatabaseHelper{
     //############################################################################
     //############################################################################
     
-    public function addItemForSeller($pkidSeller, $pkidProduct, $price, $qnt){}
-    public function refillItemForSeller($pkidSeller, $pkidProduct, $qnt){}
+    public function addItemForSeller($pkidSeller, $pkidProduct, $price, $qnt){
+        $query = "INSERT INTO prodotti_forniti (idFornitore, idProdotto, prezzo, qntFornita)
+        VALUES (?, ?, ?, ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('iifi', $pkidSeller, $pkidProduct, $price, $qnt);
+        $stmt->execute();
+        return $stmt->insert_id;
+    }
+    public function refillItemForSeller($pkidSeller, $pkidProduct, $qnt){
+        $query = "UPDATE prodotti_forniti
+        SET qntFornita = ? 
+        WHERE (idFornitore = ?) AND (idProdotto = ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('iii', $qnt, $pkidSeller, $pkidProduct);
+        $stmt->execute();
+        return $stmt->insert_id;
+    }
     public function addNewProduct(){}
 
     //############################################################################
@@ -317,6 +332,21 @@ class DatabaseHelper{
         LEFT JOIN prodotti
         ON prodotti.idProdotto = liste_prodotti_ordine.idProdotto
         WHERE ordini.idCliente = ?
+        AND liste_prodotti_ordine.nOrdine IS NOT NULL";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $pkid);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function orderForSeller($pkid) {
+        $query="SELECT * 
+        FROM ordini
+        LEFT JOIN liste_prodotti_ordine
+        ON liste_prodotti_ordine.nOrdine = ordini.nOrdine
+        LEFT JOIN prodotti
+        ON prodotti.idProdotto = liste_prodotti_ordine.idProdotto
+        WHERE liste_prodotti_ordine.idFornitore = ?
         AND liste_prodotti_ordine.nOrdine IS NOT NULL";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $pkid);
