@@ -12,7 +12,7 @@
             <div class="card-body">
                 <h5 class="card-title"><?php echo $order['nome'];?></h5>
                 <p class="card-text">
-                    Data consegna prevista: <?php echo $order['dataRichiesta'];?>
+                    Data ordine: <?php echo $order['dataRichiesta'];?>
                 </p>
             </div>
         </div>
