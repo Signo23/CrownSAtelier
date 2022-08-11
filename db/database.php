@@ -166,9 +166,6 @@ class DatabaseHelper{
     }
 
     public function removeFromCart($userPkid, $sellerPkid, $productPkid){
-        debug_to_console($userPkid);
-        debug_to_console($sellerPkid);
-        debug_to_console($productPkid);
         $query = "DELETE FROM carrelli 
         WHERE idCliente = ? 
         AND idFornitore = ? 
@@ -285,7 +282,17 @@ class DatabaseHelper{
         return $stmt->insert_id;
     }
     public function addNewProduct(){}
-    public function removeItemForSeller(){}
+
+    public function removeItemForSeller($sellerPkid, $productPkid){
+        $query = "DELETE FROM prodotti_forniti 
+        WHERE idFornitore = ? 
+        AND idProdotto = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('ii', $sellerPkid, $productPkid);
+        $stmt->execute();
+        var_dump($stmt->error);
+        return true;
+    }
 
     public function reduceQntItemSeller($pkidSeller, $pkidItem) {
         $query = "UPDATE prodotti_forniti 
@@ -389,7 +396,6 @@ class DatabaseHelper{
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $userPkid);
         $stmt->execute();
-        var_dump($stmt->error);
         return true;
     }
 
@@ -403,6 +409,17 @@ class DatabaseHelper{
         $stmt->bind_param('iii', $nOrder, $itemPkid, $sellerPkid);
         $stmt->execute();
         $result = $stmt->insert_id;
+
+        $query = "SELECT *
+        FROM ordini
+        WHERE nOrdine = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $nOrder);
+        $stmt->execute();
+        $order = $stmt->get_result()->fetch_all(MYSQLI_ASSOC)[0];
+
+        $this->notifyOrderShipped($order['idCliente']);
+
         return $result;
     }
 }
