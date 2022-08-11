@@ -18,6 +18,9 @@ if(isset($_GET['id'])){
     } else if ($_GET['id'] == "user-order") {
         $templateParams['orders'] = $dbh->orderForUser($_SESSION['id']);
     } else if ($_GET['id'] == "seller-order") {
+        if(isset($_POST['idOrder'])) {
+            $dbh->sendItemOfOrder($_POST['idOrder'], $_POST['idSeller'], $_POST['idItem']);
+        }
         $templateParams['orders'] = $dbh->orderForSeller($_SESSION['id']);
     }
 }

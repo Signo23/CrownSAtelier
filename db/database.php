@@ -392,5 +392,18 @@ class DatabaseHelper{
         var_dump($stmt->error);
         return true;
     }
+
+    public function sendItemOfOrder($nOrder, $sellerPkid, $itemPkid){
+        $query = "UPDATE liste_prodotti_ordine
+        SET spedito = '1' 
+        WHERE nOrdine = ? 
+        AND idProdotto = ? 
+        AND idFornitore = ? ";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('iii', $nOrder, $itemPkid, $sellerPkid);
+        $stmt->execute();
+        $result = $stmt->insert_id;
+        return $result;
+    }
 }
 ?>
