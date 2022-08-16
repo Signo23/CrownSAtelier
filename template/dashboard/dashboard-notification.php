@@ -5,7 +5,7 @@
     </div>
 <?php else: ?>
     <?php foreach($templateParams['notication'] as $notif): ?>
-        <div class="card">
+        <div class="card m-2">
             <div class="card-header">
             </div>
             <div class="card-body">

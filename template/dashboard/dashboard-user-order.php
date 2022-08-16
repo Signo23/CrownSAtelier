@@ -1,6 +1,6 @@
-<?php if(!isset($templateParams['orders']) ||  count($templateParams['orders'])==0 ): ?>
+<?php if(!isset($templateParams['orders']) ||  count($templateParams['orders'])==0 ): ?>Stashed changes
     <div class="d-flex">
-        <h3 class="m-3">Nessun ordine<h3>
+        <h3 class="m-3">Nessun ordine</h3>
         <lottie-player src="https://assets8.lottiefiles.com/packages/lf20_uqfbsoei.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop  autoplay></lottie-player>
     </div>
 <?php else: ?>
