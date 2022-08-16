@@ -191,6 +191,32 @@ class DatabaseHelper{
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function getProductForSeller($sellerPkid) {
+        $query = "SELECT * 
+        FROM prodotti, prodotti_forniti 
+        WHERE prodotti.idProdotto = prodotti_forniti.idProdotto 
+        AND prodotti_forniti.idFornitore = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $sellerPkid);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getProductNotForSeller($sellerPkid) {
+        $query = "SELECT prodotti.*
+        FROM prodotti, prodotti_forniti 
+        WHERE prodotti.idProdotto = prodotti_forniti.idProdotto 
+        AND prodotti_forniti.idProdotto NOT IN (SELECT p.idProdotto
+                                                FROM prodotti_forniti p
+                                                WHERE p.idFornitore = ?)
+        GROUP BY prodotti.idProdotto
+        ORDER BY prodotti.idProdotto";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $sellerPkid);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
     //############################################################################
     //############################################################################
     //##                                                                        ##
