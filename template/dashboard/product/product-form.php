@@ -28,7 +28,7 @@
 
     <div class="mb-3 col-12 <?php if($_GET['form']!=1) {echo 'd-none';}?>">
         <label for="formFile" class="form-label">Foto prodotto</label>
-        <input class="form-control" type="file" id="formFile" <?php if($_GET['form']==1) {echo 'required';}?>>
+        <input class="form-control" type="file" accept="image/png, image/jpeg" id="formFile" <?php if($_GET['form']==1) {echo 'required';}?>>
     </div>
 
     <div class="mb-3 col-12 d-flex justify-content-end align-items-center">
