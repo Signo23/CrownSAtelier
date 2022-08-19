@@ -5,9 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel = 'icon' href="./resources/icon.ico"
         type = "image/x-icon"/>
-        <link rel="stylesheet" href="./style.css"/>
-        <?php if(isset($templateParmas["css"])):?> 
-                    <link rel="stylesheet" href="css/<?php echo $templateParmas["css"]; ?>"/>
+        <link rel="stylesheet" href="./style.css"/> 
+        <?php if(isset($templateParams["css"])):?> 
+            <link rel="stylesheet" href="css/<?php echo $templateParams["css"]; ?>"/> 
+        <?php endif; ?>
+        <?php if(isset($templateParams["js"])):?> 
+            <script src="./js/<?php echo $templateParams["js"]; ?>"></script>
         <?php endif; ?>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -17,7 +20,6 @@
     </head>
     <body class="d-flex flex-column min-vh-100">
         <?php require($templateParams["nav"])?>
-            
             <?php
                 if(isset($templateParams["nome"])){
                     require($templateParams["nome"]);

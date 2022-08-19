@@ -13,8 +13,9 @@ if(isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["telefono
 } 
 elseif(isset($_GET['id'])){
         $templateParams["titolo"] = "Crown's Atelier - Signin ".$_GET['id'];
+        $templateParams["css"] = "signin.css";
+        debug_to_console($templateParams["js"]);
         $templateParams["nome"] = "signin-" .$_GET['id'] .".php";
-        $templateParmas["css"] = "signin.css";
         require 'template/no-nav-base.php';
 
     } 

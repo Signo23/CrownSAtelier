@@ -29,7 +29,7 @@
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $prodotto['nome'];?></h5>
                             <p class="card-text"><?php echo $prodotto['descrizione'];?></p>
-                            <a href="dashboard.php?form=2" class="stretched-link"></a>
+                            <a href="dashboard.php?form=2&prod=<?php echo $prodotto['idProdotto']?>" class="stretched-link"></a>
                         </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $prodotto['nome'];?></h5>
                             <p class="card-text"><?php echo $prodotto['descrizione'];?></p>
-                            <a href="dashboard.php?form=3" class="stretched-link"></a>
+                            <a href="dashboard.php?form=3&prod=<?php echo $prodotto['idProdotto']?>" class="stretched-link"></a>
                         </div>
                     </div>
                 </div>

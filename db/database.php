@@ -48,6 +48,18 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function getProductInfo($id){
+        $query = "SELECT * 
+        FROM prodotti
+        WHERE prodotti.idProdotto = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i',$id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function getSellerByProductId($id){
         $query = "SELECT * 
         FROM utenti, prodotti_forniti 
@@ -294,7 +306,7 @@ class DatabaseHelper{
         $query = "INSERT INTO prodotti_forniti (idFornitore, idProdotto, prezzo, qntFornita)
         VALUES (?, ?, ?, ?)";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('iifi', $pkidSeller, $pkidProduct, $price, $qnt);
+        $stmt->bind_param('iidi', $pkidSeller, $pkidProduct, $price, $qnt);
         $stmt->execute();
         return $stmt->insert_id;
     }

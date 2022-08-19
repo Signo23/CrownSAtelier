@@ -1,6 +1,6 @@
 <body class="text-center">
 
-      <main class="form-signin">
+      <main class="form-signin needs-validation">
           <form action="#" method="POST">
             <img src="./resources/img/Logo.png" alt="" style="width: 300px"/>
             <h1 class="h3 mb-3 fw-normal">Accedi</h1>

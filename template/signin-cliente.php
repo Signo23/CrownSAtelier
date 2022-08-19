@@ -4,11 +4,11 @@
     <img src="./resources/img/Logo.png" alt="" style="width: 150px;"/>
     <h1 class="h3 mb-3 fw-normal">Crea un nuovo account</h1>
 
-    <form action="#" method="POST">
+    <form  method="POST" id="signupFormUser" class="needs-validation">
 
       <div class="form-floating mb-2">
         <input type="text" class="form-control" id="nome" name ="nome" placeholder="Mario" required>
-        <label for="nome" >Nome</label>
+        <label for="nome">Nome</label>
       </div>
 
       <div class="form-floating mb-2">
