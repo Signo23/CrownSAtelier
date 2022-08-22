@@ -75,7 +75,7 @@
                 echo ' onchange=checkFormProduct()';
             }
             ?>  required>
-            <option>Seleziona una categoria</option>
+            <option></option>
             <?php foreach($dbh->getCategories() as $categoria): ?>
                 <option <?php
                 if(isset($_GET['prod']) &&($categoria['idCategoria']==$templateParams['prod']['categoria'])){
