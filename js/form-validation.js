@@ -1,3 +1,22 @@
+class ProductForm {
+  constructor(nome, descrizione, price, qnt, tag, formFile){
+    this.nome = nome;
+    this.descrizione = descrizione;
+    this.price = price;
+    this.qnt = qnt;
+    this.tag = tag;
+    this.formFile = formFile;
+  }
+
+  isReadyForSubmit(){
+    return this.nome != "" && this.descrizione != "" && this.price != "" && this.qnt != "" && this.tag != "";
+  }
+
+  isReadyForSubmitForSubmitNewProduct(){
+    return this.isReadyForSubmit() && this.formFile != "";
+  }
+}
+
 function checkFormProduct(){
   let form = new ProductForm(
     document.getElementById("nome").value,
@@ -26,21 +45,69 @@ function checkFormNewProduct(){
   console.log(form);
 }
 
-class ProductForm {
-  constructor(nome, descrizione, price, qnt, tag, formFile){
+
+class SignClienteForm {
+  constructor(nome, cognome, cellulare, email, password){
     this.nome = nome;
-    this.descrizione = descrizione;
-    this.price = price;
-    this.qnt = qnt;
-    this.tag = tag;
-    this.formFile = formFile;
+    this.cognome = cognome;
+    this.cellulare = cellulare;
+    this.email = email;
+    this.password = password;
   }
 
   isReadyForSubmit(){
-    return this.nome != "" && this.descrizione != "" && this.price != "" && this.qnt != "" && this.tag != "";
+    return this.nome != "" && this.cognome != "" && this.cellulare != "" && validateEmail(this.email)
+     && this.password != "";
   }
 
-  isReadyForSubmitForSubmitNewProduct(){
-    return this.isReadyForSubmit() && this.formFile != "";
+}
+
+function checkFormSignInCliente(){
+  let form = new SignClienteForm(
+    document.getElementById("nome").value,
+    document.getElementById("cognome").value,
+    document.getElementById("cellulare").value,
+    document.getElementById("email").value,
+    document.getElementById("password").value,
+  );
+
+  document.getElementById("submit").disabled = !form.isReadyForSubmit();
+  console.log(form);
+}
+
+class SignVenditoreForm {
+  constructor(email, password, nomeNegozio, partitaIVA, indirizzo, telefono){
+    this.email = email;
+    this.password = password;
+    this.nomeNegozio = nomeNegozio;
+    this.partitaIVA = partitaIVA;
+    this.indirizzo = indirizzo;
+    this.telefono = telefono;
   }
+
+  isReadyForSubmit(){
+    return validateEmail(this.email) && this.password != "" && this.nomeNegozio != "" 
+    && this.partitaIVA.length == 11 && this.indirizzo != "" && this.telefono.length == 10;
+  }
+
+}
+
+function checkFormSignInFornitore(){
+  let form = new SignVenditoreForm(
+    document.getElementById("email").value,
+    document.getElementById("password").value,
+    document.getElementById("nomeNegozio").value,
+    document.getElementById("partitaIVA").value,
+    document.getElementById("indirizzo").value,
+    document.getElementById("telefono").value,
+  );
+
+  document.getElementById("submit").disabled = !form.isReadyForSubmit();
+  console.log(form);
+}
+
+function validateEmail(input) {
+    var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    return input.match(validRegex);
+
 }
