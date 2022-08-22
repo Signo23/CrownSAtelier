@@ -18,6 +18,11 @@
         if(isset($_GET['prod'])){
             echo 'value="'. $templateParams['prod']['nome']. "\"";
         }
+        if($_GET['form'] == 1){
+            echo ' onchange=checkFormNewProduct()';
+        } else {
+            echo ' onchange=checkFormProduct()';
+        }
 
         ?> required>
     </div>
@@ -26,6 +31,11 @@
         <textarea class="form-control" id="descrizione" rows="3" <?php 
             if($_GET['form']==2 || $_GET['form']==3) {
                 echo 'disabled ';
+            }
+            if($_GET['form'] == 1){
+                echo ' onchange=checkFormNewProduct()';
+            } else {
+                echo ' onchange=checkFormProduct()';
             }
         ?>  required><?php
         if(isset($_GET['prod'])){
@@ -44,12 +54,27 @@
         <input type="number" class="form-control" min="0" id="qnt" <?php
         if(isset($_GET['prod']) && $_GET['form']==2){
             echo 'value='.$templateParams['prod']['qntFornita'];
-        }?> required>
+        }
+        if($_GET['form'] == 1){
+            echo ' onchange=checkFormNewProduct()';
+        } else {
+            echo ' onchange=checkFormProduct()';
+        }
+        ?> required>
     </div>
 
     <div class="mb-3 col-12 col-md-4">
         <label for="tag" class="form-label">Categoria</label>
-        <select class="form-select" aria-label="Default select example" id="tag" <?php if($_GET['form']==2 || $_GET['form']==3) {echo 'disabled';}?>  required>
+        <select class="form-select" aria-label="Default select example" id="tag" <?php 
+            if($_GET['form']==2 || $_GET['form']==3) {
+                echo 'disabled';
+            }
+            if($_GET['form'] == 1){
+                echo ' onchange=checkFormNewProduct()';
+            } else {
+                echo ' onchange=checkFormProduct()';
+            }
+            ?>  required>
             <option>Seleziona una categoria</option>
             <?php foreach($dbh->getCategories() as $categoria): ?>
                 <option <?php
@@ -64,11 +89,19 @@
 
     <div class="mb-3 col-12 <?php if($_GET['form']!=1) {echo 'd-none';}?>">
         <label for="formFile" class="form-label">Foto prodotto</label>
-        <input class="form-control" type="file" accept="image/png, image/jpeg" id="formFile" <?php if($_GET['form']==1) {echo 'required';}?>>
+        <input class="form-control" type="file" accept="image/png, image/jpeg" id="formFile" <?php 
+        if($_GET['form']==1) {
+            echo 'required';
+        }
+        if($_GET['form'] == 1){
+            echo ' onchange=checkFormNewProduct()';
+        } else {
+            echo ' onchange=checkFormProduct()';
+        }
+            ?>>
     </div>
 
     <div class="mb-3 col-12 d-flex justify-content-end align-items-center">
-        <button type="submit" class="btn btn-danger m-1 <?php if($_GET['form']==3 || $_GET['form']==1) {echo 'd-none';}?>">Elimina</button>
-        <button type="submit" class="btn btn-success m-1">Salva</button>
+        <button id="submit" type="submit" method="POST" class="btn btn-success m-1" action="#?action=1" disabled>Salva</button>
     </div>
 </form>

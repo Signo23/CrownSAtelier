@@ -5,7 +5,8 @@
     $templateParams["titolo"] = "Crown's Atelier";
     $templateParams["nav"] = "navbar.php";
     $templateParams["nome"] = "./template/dashboard.php";
-    $templateParmas["css"] = "dashboard.css";
+    $templateParams["css"] = "dashboard.css";
+    $templateParams["js"] = "form-validation.js";
 
     if(isset($_GET['id'])){
         $templateParams["page"] = './template/dashboard/dashboard-'.$_GET['id'].'.php';

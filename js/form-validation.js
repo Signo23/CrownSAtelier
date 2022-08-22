@@ -1,20 +1,46 @@
-// Example starter JavaScript for disabling form submissions if there are invalid fields
-(function () {
-  'use strict'
+function checkFormProduct(){
+  let form = new ProductForm(
+    document.getElementById("nome").value,
+    document.getElementById("price").value,
+    document.getElementById("price").value,
+    document.getElementById("qnt").value,
+    document.getElementById("tag").value,
+    ""
+  );
 
-  // Fetch all the forms we want to apply custom Bootstrap validation styles to
-  var forms = document.querySelectorAll('.needs-validation')
+  console.log(form);
+  document.getElementById("submit").disabled = !form.isReadyForSubmit();
+}
 
-  // Loop over them and prevent submission
-  Array.prototype.slice.call(forms)
-    .forEach(function (form) {
-      form.addEventListener('submit', function (event) {
-        if (!form.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
-        }
+function checkFormNewProduct(){
+  let form = new ProductForm(
+    document.getElementById("nome").value,
+    document.getElementById("price").value,
+    document.getElementById("price").value,
+    document.getElementById("qnt").value,
+    document.getElementById("tag").value,
+    document.getElementById("formFile").value
+  );
 
-        form.classList.add('was-validated')
-      }, false)
-    })
-})()
+  document.getElementById("submit").disabled = !form.isReadyForSubmitForSubmitNewProduct();
+  console.log(form);
+}
+
+class ProductForm {
+  constructor(nome, descrizione, price, qnt, tag, formFile){
+    this.nome = nome;
+    this.descrizione = descrizione;
+    this.price = price;
+    this.qnt = qnt;
+    this.tag = tag;
+    this.formFile = formFile;
+  }
+
+  isReadyForSubmit(){
+    return this.nome != "" && this.descrizione != "" && this.price != "" && this.qnt != "" && this.tag != "";
+  }
+
+  isReadyForSubmitForSubmitNewProduct(){
+    return this.isReadyForSubmit() && this.formFile != "";
+  }
+}
