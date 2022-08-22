@@ -1,7 +1,7 @@
 <li class="nav-item">
-    <a class="nav-link" href="dashboard.php?id=seller">
+    <a class="nav-link" href="dashboard.php">
     <span data-feather="users"></span>
-    Impostazioni utente
+    Utente
     </a>
 </li>
 <li class="nav-item">

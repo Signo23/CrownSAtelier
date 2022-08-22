@@ -310,26 +310,38 @@ class DatabaseHelper{
         $stmt->execute();
         return $stmt->insert_id;
     }
-    public function refillItemForSeller($pkidSeller, $pkidProduct, $qnt){
+    public function editItemForSeller($pkidSeller, $pkidProduct, $price, $qnt){
         $query = "UPDATE prodotti_forniti
-        SET qntFornita = ? 
-        WHERE (idFornitore = ?) AND (idProdotto = ?)";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param('iii', $qnt, $pkidSeller, $pkidProduct);
-        $stmt->execute();
-        return $stmt->insert_id;
-    }
-    public function addNewProduct(){}
-
-    public function removeItemForSeller($sellerPkid, $productPkid){
-        $query = "DELETE FROM prodotti_forniti 
+        SET qntFornita = ?, prezzo = ?
         WHERE idFornitore = ? 
         AND idProdotto = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('ii', $sellerPkid, $productPkid);
+        $stmt->bind_param('idii', $qnt, $price, $pkidSeller, $pkidProduct);
         $stmt->execute();
-        var_dump($stmt->error);
-        return true;
+        return $stmt->insert_id;
+    }
+    public function addNewProduct($name, $descr, $img, $idcategory){
+        $query = "INSERT INTO prodotti (nome, descrizione, imgURL, categoria) 
+        VALUES (?, ?, ?, ?)";
+        $stmt = $this->db->prepare($query);
+        $URL = $this->getCategoryDir($idcategory) . $img;
+        $stmt->bind_param('sssi', $name, $descr, $URL, $idcategory);
+        $stmt->execute();
+        return $stmt->insert_id;
+    }
+
+    public function getCategoryDir($id){
+        switch($id){
+            case 1:
+                return DIR_CORONE;
+            case 2:
+                return DIR_VESTITI;
+            case 3:
+                return DIR_FESTONI;
+            case 4:
+                return DIR_BOUQUET;
+        }
+
     }
 
     public function reduceQntItemSeller($pkidSeller, $pkidItem) {
