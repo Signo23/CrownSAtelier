@@ -116,7 +116,7 @@ class UserForm {
   }
 
   isReadyForSubmit(){
-    return this.nome != "" && this.cognome != "" && this.telefono != "";
+    return this.nome != "" && this.cognome != "" && this.telefono.length == 10;
   }
 }
 
@@ -124,6 +124,29 @@ function checkFormUser(){
   let form = new UserForm(
     document.getElementById("nome").value,
     document.getElementById("cognome").value,
+    document.getElementById("telefono").value,
+  );
+
+  document.getElementById("submit").disabled = !form.isReadyForSubmit();
+
+}
+
+class SellerForm {
+  constructor(nomeAzienda, indirizzo, telefono){
+    this.nomeAzienda = nomeAzienda;
+    this.indirizzo = indirizzo;
+    this.telefono = telefono;
+  }
+
+  isReadyForSubmit(){
+    return this.nomeAzienda != "" && this.indirizzo != "" && this.telefono.length == 10;
+  }
+}
+
+function checkFormUser(){
+  let form = new SellerForm(
+    document.getElementById("nomeAzienda").value,
+    document.getElementById("indirizzo").value,
     document.getElementById("telefono").value,
   );
 
