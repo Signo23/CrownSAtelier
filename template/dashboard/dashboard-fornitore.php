@@ -2,18 +2,18 @@
   <div class="row">
   <div class="mb-3 col-12 col-md-4">
         <label for="nome" class="form-label">Nome azienda</label>
-        <input type="text" class="form-control" id="nomeAzienda" name="nomeAzienda" onchange="checkFormUser()"
-         value=<?php echo  $_SESSION["user"]['nomeAzienda']?>>
+        <input type="text" class="form-control" id="nomeAzienda" name="nomeAzienda" onchange="checkFormSeller()"
+         value="<?php echo  $_SESSION["user"]['nomeAzienda']?>">
     </div>
     <div class="mb-3 me-4 col-12 col-md-4">
         <label for="cognome" class="form-label">Indirizzo</label>
-        <input type="text" class="form-control" id="indirizzo" name="indirizzo" onchange="checkFormUser()"
-         value=<?php echo  $_SESSION["user"]['indirizzo']?>>
+        <input type="text" class="form-control" id="indirizzo" name="indirizzo" onchange="checkFormSeller()"
+         value="<?php echo  $_SESSION["user"]['indirizzo']?>">
     </div>
     <div class="mb-3 col-12 col-md-4">
         <label for="telefono" class="form-label">Telefono</label>
-        <input type="number" class="form-control" id="telefono" name="telefono" onchange="checkFormUser()"
-         value=<?php echo  $_SESSION["user"]['telefono']?>>
+        <input type="number" class="form-control" id="telefono" name="telefono" onchange="checkFormSeller()"
+         value="<?php echo  $_SESSION["user"]['telefono']?>">
     </div>
 
     <div class="m-0 p-0 col-12 d-none">

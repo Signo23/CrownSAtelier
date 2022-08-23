@@ -17,6 +17,18 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function getUserInfo($pkid){
+        $query = "SELECT *
+        FROM utenti
+        WHERE idUtente = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i',$pkid);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC)[0];
+    }
+
     public function getProductByCategory($idcategory){
         $query = "SELECT * 
         FROM prodotti, prodotti_forniti 
@@ -486,8 +498,17 @@ class DatabaseHelper{
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('sssi', $phone, $name, $surname, $pkid);
         $stmt->execute();
-        $result = $stmt->insert_id;
-        return $result;
+        return $stmt->insert_id;
+    }
+
+    public function updateSeller($pkid, $name, $address, $phone){
+        $query = "UPDATE utenti 
+        SET telefono = ?, nomeAzienda = ?, indirizzo = ? 
+        WHERE idUtente = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('sssi', $phone, $name, $address, $pkid);
+        $stmt->execute();
+        return $stmt->insert_id;
     }
 }
 ?>

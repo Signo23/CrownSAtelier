@@ -143,7 +143,7 @@ class SellerForm {
   }
 }
 
-function checkFormUser(){
+function checkFormSeller(){
   let form = new SellerForm(
     document.getElementById("nomeAzienda").value,
     document.getElementById("indirizzo").value,
