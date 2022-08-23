@@ -472,5 +472,22 @@ class DatabaseHelper{
 
         return $result;
     }
+    //############################################################################
+    //############################################################################
+    //##                                                                        ##
+    //##                                USERS                                   ##
+    //##                                                                        ##
+    //############################################################################
+    //############################################################################
+    public function updateUser($pkid, $name, $surname, $phone){
+        $query = "UPDATE utenti 
+        SET telefono = ?, nome = ?, cognome = ? 
+        WHERE idUtente = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('sssi', $phone, $name, $surname, $pkid);
+        $stmt->execute();
+        $result = $stmt->insert_id;
+        return $result;
+    }
 }
 ?>

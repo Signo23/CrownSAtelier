@@ -27,7 +27,6 @@ function checkFormProduct(){
     ""
   );
 
-  console.log(form);
   document.getElementById("submit").disabled = !form.isReadyForSubmit();
 }
 
@@ -42,7 +41,6 @@ function checkFormNewProduct(){
   );
 
   document.getElementById("submit").disabled = !form.isReadyForSubmitForSubmitNewProduct();
-  console.log(form);
 }
 
 
@@ -72,7 +70,6 @@ function checkFormSignInCliente(){
   );
 
   document.getElementById("submit").disabled = !form.isReadyForSubmit();
-  console.log(form);
 }
 
 class SignVenditoreForm {
@@ -103,11 +100,33 @@ function checkFormSignInFornitore(){
   );
 
   document.getElementById("submit").disabled = !form.isReadyForSubmit();
-  console.log(form);
 }
 
 function validateEmail(input) {
     var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     return input.match(validRegex);
+
+}
+
+class UserForm {
+  constructor(nome, cognome, telefono){
+    this.nome = nome;
+    this.cognome = cognome;
+    this.telefono = telefono;
+  }
+
+  isReadyForSubmit(){
+    return this.nome != "" && this.cognome != "" && this.telefono != "";
+  }
+}
+
+function checkFormUser(){
+  let form = new UserForm(
+    document.getElementById("nome").value,
+    document.getElementById("cognome").value,
+    document.getElementById("telefono").value,
+  );
+
+  document.getElementById("submit").disabled = !form.isReadyForSubmit();
 
 }

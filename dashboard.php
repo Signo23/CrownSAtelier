@@ -43,9 +43,13 @@
             debug_to_console("3");
             debug_to_console((int)$_POST['qnt']);
             $dbh->editItemForSeller($_SESSION['id'], $_POST['prod'], (float)$_POST['price'], (int)$_POST['qnt']);
-        } else {
+        } else if($_POST['save'] == 3){
             debug_to_console("4");
             $dbh->addItemForSeller($_SESSION['id'], $_POST['prod'], (float)$_POST['price'], (int)$_POST['qnt']);
+        } else if($_POST['save'] == 4){
+    // SALVATAGGIO CLIENTE
+        } else {
+    // SALVATAGGIO FORNITORE
         }
     }
     $templateParams["dashboardNav"] = './template/dashboard/dashboard-'.$_SESSION["tipo"].'-nav.php';
