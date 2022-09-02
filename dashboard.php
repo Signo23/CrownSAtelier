@@ -33,9 +33,13 @@
     //SALVATAGGIO PRODOTTI
     if(isset($_POST['save'])){
             if($_POST['save'] == 1){
-            $new = $dbh->addNewProduct($_POST['nome'], $_POST['descrizione'], basename($_FILES['formFile']["name"]), (int)$_POST['tag']);
-            uploadImage(UPLOAD_DIR . $dbh->getCategoryDir((int)$_POST['tag']), $_FILES["formFile"]);
-            $dbh->addItemForSeller($_SESSION['id'], $new, (float)$_POST['price'], (int)$_POST['qnt']);
+            $res = uploadImage(UPLOAD_DIR . $dbh->getCategoryDir((int)$_POST['tag']), $_FILES["formFile"]);
+            if($res[0] != 0) {
+                debug_to_console($res[1]);
+            } else {
+                $new = $dbh->addNewProduct($_POST['nome'], $_POST['descrizione'], basename($_FILES['formFile']["name"]), (int)$_POST['tag']);
+                $dbh->addItemForSeller($_SESSION['id'], $new, (float)$_POST['price'], (int)$_POST['qnt']);
+            }
         } else if($_POST['save'] == 2) {
             $dbh->editItemForSeller($_SESSION['id'], $_POST['prod'], (float)$_POST['price'], (int)$_POST['qnt']);
         } else if($_POST['save'] == 3){

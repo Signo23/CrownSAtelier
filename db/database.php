@@ -31,12 +31,14 @@ class DatabaseHelper{
 
     public function getProductByCategory($idcategory){
         $query = "SELECT * 
-        FROM prodotti, prodotti_forniti 
+        FROM prodotti, prodotti_forniti INNER JOIN(
+			SELECT idProdotto, MIN(prezzo) minPrezzo
+            FROM prodotti_forniti
+            GROUP BY idProdotto
+        ) p ON prodotti_forniti.idProdotto = p.idProdotto
         WHERE prodotti.idProdotto = prodotti_forniti.idProdotto 
         AND prodotti.categoria = ?
-        AND prodotti_forniti.prezzo IN ( SELECT min(p.prezzo) 
-                                            FROM prodotti_forniti p 
-                                            GROUP BY p.idProdotto )
+        AND prodotti_forniti.prezzo = p.minPrezzo
         AND prodotti_forniti.qntFornita > 0";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i',$idcategory);
@@ -229,8 +231,7 @@ class DatabaseHelper{
     public function getProductNotForSeller($sellerPkid) {
         $query = "SELECT prodotti.*
         FROM prodotti, prodotti_forniti 
-        WHERE prodotti.idProdotto = prodotti_forniti.idProdotto 
-        AND prodotti_forniti.idProdotto NOT IN (SELECT p.idProdotto
+        WHERE prodotti.idProdotto NOT IN (SELECT p.idProdotto
                                                 FROM prodotti_forniti p
                                                 WHERE p.idFornitore = ?)
         GROUP BY prodotti.idProdotto
@@ -268,7 +269,8 @@ class DatabaseHelper{
         $query = "SELECT *
         FROM ricezioni_fornitori 
         LEFT JOIN notifiche ON ricezioni_fornitori.tipo = notifiche.tipo
-        WHERE ricezioni_fornitori.idFornitore = ?";
+        WHERE ricezioni_fornitori.idFornitore = ?
+        ORDER BY ricezioni_fornitori.data DESC";
         if($number > 0) {
             $query." LIMIT ?";
             $stmt = $this->db->prepare($query);
@@ -284,7 +286,8 @@ class DatabaseHelper{
         $query = "SELECT *
         FROM ricezioni_cliente 
         LEFT JOIN notifiche ON ricezioni_cliente.tipo = notifiche.tipo
-        WHERE ricezioni_cliente.idCliente = ?";
+        WHERE ricezioni_cliente.idCliente = ?
+        ORDER BY ricezioni_cliente.data DESC";
         if($number > 0) {
             $query." LIMIT ?";
             $stmt = $this->db->prepare($query);
@@ -399,7 +402,8 @@ class DatabaseHelper{
         LEFT JOIN prodotti
         ON prodotti.idProdotto = liste_prodotti_ordine.idProdotto
         WHERE ordini.idCliente = ?
-        AND liste_prodotti_ordine.nOrdine IS NOT NULL";
+        AND liste_prodotti_ordine.nOrdine IS NOT NULL
+        ORDER BY liste_prodotti_ordine.nOrdine DESC";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $pkid);
         $stmt->execute();
@@ -414,7 +418,8 @@ class DatabaseHelper{
         LEFT JOIN prodotti
         ON prodotti.idProdotto = liste_prodotti_ordine.idProdotto
         WHERE liste_prodotti_ordine.idFornitore = ?
-        AND liste_prodotti_ordine.nOrdine IS NOT NULL";
+        AND liste_prodotti_ordine.nOrdine IS NOT NULL
+        ORDER BY liste_prodotti_ordine.nOrdine DESC";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $pkid);
         $stmt->execute();
